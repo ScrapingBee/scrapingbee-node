@@ -1,0 +1,32 @@
+{
+  "name": "scrapingbee-node",
+  "version": "1.0.0",
+  "description": "ScrapingBee Node SDK",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "sdk"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ScrapingBee/scrapingbee-node.git"
+  },
+  "author": "ScrapingBee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ScrapingBee/scrapingbee-node/issues"
+  },
+  "homepage": "https://github.com/ScrapingBee/scrapingbee-node#readme",
+  "devDependencies": {
+    "eslint": "^7.30.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "prettier": "^2.3.2"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}
