@@ -3,6 +3,25 @@ const axios = require('axios');
 const API_URL = 'https://app.scrapingbee.com/api/v1/';
 const DEFAULT_HEADERS = { 'User-Agent': 'ScrapingBee-Node/' + require('./package.json').version };
 
+function process_url(url) {
+    return encodeURIComponent(url);
+}
+
+function process_js_snippet(js_snippet) {
+    return Buffer.from(js_snippet).toString('base64');
+}
+
+function process_cookies(cookies) {
+    switch (typeof cookies) {
+        case 'string':
+            return cookies;
+        case 'object':
+            return cookies;
+        default:
+            Error('Cookies must be a string or object');
+    }
+}
+
 function process_headers(headers, prefix = 'Spb-') {
     var new_headers = {};
     for (key in headers) {
