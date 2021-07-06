@@ -1,5 +1,5 @@
 {
-  "name": "scrapingbee-node",
+  "name": "scrapingbee",
   "version": "1.0.0",
   "description": "ScrapingBee Node SDK",
   "main": "index.js",

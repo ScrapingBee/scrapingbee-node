@@ -3,10 +3,6 @@ const axios = require('axios');
 const API_URL = 'https://app.scrapingbee.com/api/v1/';
 const DEFAULT_HEADERS = { 'User-Agent': 'ScrapingBee-Node/' + require('./package.json').version };
 
-function process_url(url) {
-    return encodeURIComponent(url);
-}
-
 function process_js_snippet(js_snippet) {
     return Buffer.from(js_snippet).toString('base64');
 }
@@ -54,9 +50,6 @@ function process_params(params) {
         }
 
         switch (key) {
-            case 'url':
-                clean_params[key] = process_url(params[key]);
-                break;
             case 'js_snippet':
                 clean_params[key] = process_js_snippet(params[key]);
                 break;
@@ -83,7 +76,7 @@ function process_headers(headers, prefix = 'Spb-') {
     return new_headers;
 }
 
-export class ScrapingBeeClient {
+class ScrapingBeeClient {
     constructor(api_key) {
         this.api_key = api_key;
     }
@@ -109,12 +102,13 @@ export class ScrapingBeeClient {
         }
 
         // Process params
+        params.url = url;
         params = process_params(params);
+        params.api_key = this.api_key;
 
         return axios({
-            url: '',
+            url: API_URL,
             method: method,
-            baseURL: API_URL,
             headers: headers,
             params: params,
             data: data,
@@ -129,3 +123,5 @@ export class ScrapingBeeClient {
         return this.request('post', url, params, data, headers, cookies);
     }
 }
+
+module.exports.Client = ScrapingBeeClient;
