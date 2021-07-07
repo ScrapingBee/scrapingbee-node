@@ -1,6 +1,6 @@
 const scrapingbee = require('scrapingbee');
 
-var client = new scrapingbee.Client('EPLACE-WITH-YOUR-API-KEY');
+var client = new scrapingbee.Client('REPLACE-WITH-YOUR-API-KEY');
 
 client
     .get('https://httpbin-scrapingbee.cleverapps.io/html')
