@@ -1,5 +1,2 @@
+**/.*
 test-directory/
-.vscode/
-
-.eslintrc.json
-.prettierrc.json
