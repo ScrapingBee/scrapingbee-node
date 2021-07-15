@@ -1,5 +1,5 @@
 import assert from "assert"
-import { process_params } from "../src/utils"
+import { process_params, process_headers } from "../src/utils"
 
 describe('test_process_js_snippet', function() {
     it('should return a base64 buffer', function() {
@@ -42,4 +42,23 @@ describe('test_basic_process_params', function() {
         var res = process_params({'render_js': bool});
         assert.strictEqual(res['render_js'], bool);
     });
+})
+
+describe('test_process_headers', function() {
+    it('should contains the user-agent', function() {
+        var res = process_headers({});
+        // Regex -> ScrapingBee-Node/1.0.0
+        assert.match(res['User-Agent'], /^ScrapingBee-Node\/\d+\.\d+\.\d+$/);
+    })
+
+    it('should not contains forward_headers', function() {
+        var res = process_headers({});
+        assert.strictEqual(res['forward_headers'], undefined);
+    })
+
+    it('should prefix header and forward_headers', function() {
+        var res = process_headers({'render_js': true});
+        assert.strictEqual(res['Spb-render_js'], true);
+        assert.strictEqual(res['forward_headers'], true);
+    })
 })

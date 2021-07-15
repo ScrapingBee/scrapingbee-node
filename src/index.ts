@@ -1,25 +1,9 @@
 import axios, {AxiosPromise, AxiosRequestConfig, Method } from 'axios';
 import { LIB_VERSION } from './version';
 
-import { process_params } from './utils';
+import { process_params, process_headers } from './utils';
 
 const API_URL: string = 'https://app.scrapingbee.com/api/v1/';
-const DEFAULT_HEADERS: Record<string, any> = { 'User-Agent': 'ScrapingBee-Node/' + LIB_VERSION };
-
-function process_headers(headers: Record<string, any>, prefix: string = 'Spb-'): Record<string, any> {
-    var new_headers: Record<string, any> = {};
-
-    for (let key in headers) {
-        new_headers[`${prefix}${key}`] = headers[key];
-    }
-
-    if (Object.keys(new_headers).length > 0) {
-        new_headers['forward_headers'] = true;
-    }
-    new_headers = Object.assign(new_headers, DEFAULT_HEADERS);
-
-    return new_headers;
-}
 
 export class ScrapingBeeClient {
     readonly api_key: string;
