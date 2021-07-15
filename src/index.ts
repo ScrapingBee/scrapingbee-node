@@ -1,4 +1,4 @@
-import axios, {AxiosPromise, AxiosRequestConfig, Method } from 'axios';
+import axios, { AxiosPromise, AxiosRequestConfig, Method } from 'axios';
 import { LIB_VERSION } from './version';
 
 import { process_params, process_headers } from './utils';
@@ -35,7 +35,7 @@ export class ScrapingBeeClient {
             headers: headers,
             params: params,
             data: data,
-            responseType: 'arraybuffer'
+            responseType: 'arraybuffer',
         };
 
         return axios(API_URL, axios_params);

@@ -1,4 +1,4 @@
-import { LIB_VERSION } from "./version";
+import { LIB_VERSION } from './version';
 
 const DEFAULT_HEADERS: Record<string, any> = { 'User-Agent': 'ScrapingBee-Node/' + LIB_VERSION };
 
