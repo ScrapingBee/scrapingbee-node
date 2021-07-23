@@ -1,4 +1,4 @@
-# ScrapingBee Official Node SDK 👏
+# ScrapingBee Node SDK
 
 [ScrapingBee](https://www.scrapingbee.com/) is a web scraping API that handles headless browsers and rotates proxies for you. The Node SDK makes it easier to interact with ScrapingBee's API.
 
