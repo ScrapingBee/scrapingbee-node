@@ -13,7 +13,7 @@ jobs:
               with:
                   node-version: 14.x
                   cache: 'npm'
-                  registry-url: 'https://npm.pkg.github.com'
+                  registry-url: 'https://registry.npmjs.org'
             - run: npm ci
             - run: npm run build
             - run: npm publish
