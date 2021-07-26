@@ -11,17 +11,20 @@ class ScrapingBeeClient {
     constructor(api_key) {
         this.api_key = api_key;
     }
-    request(method, url, config = {}) {
-        headers = config.headers || {};
-        headers = utils_1.process_headers(headers);
-        cookies = config.cookies || null;
+    request(method, config = {}) {
+        let params = config.params || {};
+        let raw_headers = config.headers || {};
+        let headers = utils_1.process_headers(raw_headers);
+        let cookies = config.cookies || null;
         if (cookies != null) {
             params['cookies'] = cookies;
         }
+        let url = config.url;
+        let data = config.data || {};
         params['api_key'] = this.api_key;
         params['url'] = url;
         params = utils_1.process_params(params);
-        var axios_params = {
+        let axios_params = {
             method: method,
             headers: headers,
             params: params,
@@ -30,11 +33,11 @@ class ScrapingBeeClient {
         };
         return axios_1.default(API_URL, axios_params);
     }
-    get(url, params, headers, cookies) {
-        return this.request('GET', url, params, headers, cookies);
+    get(config) {
+        return this.request('GET', config);
     }
-    post(url, params, headers, cookies, data) {
-        return this.request('POST', url, params, data, headers, cookies);
+    post(config) {
+        return this.request('POST', config);
     }
 }
 exports.ScrapingBeeClient = ScrapingBeeClient;
