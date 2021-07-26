@@ -24,46 +24,56 @@ const scrapingbee = require('scrapingbee');
 async function get(url) {
     var client = new scrapingbee.ScrapingBeeClient('REPLACE-WITH-YOUR-API-KEY');
     var response = await client.get(url, {
-        // Block ads on the page you want to scrape
-        block_ads: false,
-        // Block images and CSS on the page you want to scrape
-        block_ressources: true,
-        // Premium proxy geolocation
-        country_code: '',
-        // Control the device the request will be sent from
-        device: 'desktop',
-        // Use some data extraction rules
-        extract_rules: { title: 'h1' },
-        // Wrap response in JSON
-        json_response: false,
-        // JavaScript snippet to execute (clicking on a button, scrolling ...)
-        js_snippet: '',
-        // Scrolling to the end of the page before returning your results
-        js_scroll: false,
-        // The time to wait between each scroll
-        js_scroll_wait: 1000,
-        // The number of scrolls you want to make
-        js_scroll_count: 1,
-        // Use premium proxies to bypass difficult to scrape websites (10-25 credits/request)
-        premium_proxy: false,
-        // Execute JavaScript code with a Headless Browser (5 credits/request)
-        render_js: true,
-        // Return the original HTML before the JavaScript rendering
-        return_page_source: false,
-        // Return page screenshot as a png image
-        screenshot: false,
-        // Take a full page screenshot without the window limitation
-        screenshot_full_page: false,
-        // Transparently return the same HTTP code of the page requested.
-        transparent_status_code: false,
-        // Wait, in miliseconds, before returning the response
-        wait: 0,
-        // Wait for CSS selector before returning the response, ex ".title"
-        wait_for: '',
-        // Set the browser window width in pixel
-        window_width: 1920,
-        // Set the browser window height in pixel
-        window_height: 1080,
+        params: {
+            // Block ads on the page you want to scrape
+            block_ads: false,
+            // Block images and CSS on the page you want to scrape
+            block_ressources: true,
+            // Premium proxy geolocation
+            country_code: '',
+            // Control the device the request will be sent from
+            device: 'desktop',
+            // Use some data extraction rules
+            extract_rules: { title: 'h1' },
+            // Wrap response in JSON
+            json_response: false,
+            // JavaScript snippet to execute (clicking on a button, scrolling ...)
+            js_snippet: '',
+            // Scrolling to the end of the page before returning your results
+            js_scroll: false,
+            // The time to wait between each scroll
+            js_scroll_wait: 1000,
+            // The number of scrolls you want to make
+            js_scroll_count: 1,
+            // Use premium proxies to bypass difficult to scrape websites (10-25 credits/request)
+            premium_proxy: false,
+            // Execute JavaScript code with a Headless Browser (5 credits/request)
+            render_js: true,
+            // Return the original HTML before the JavaScript rendering
+            return_page_source: false,
+            // Return page screenshot as a png image
+            screenshot: false,
+            // Take a full page screenshot without the window limitation
+            screenshot_full_page: false,
+            // Transparently return the same HTTP code of the page requested.
+            transparent_status_code: false,
+            // Wait, in miliseconds, before returning the response
+            wait: 0,
+            // Wait for CSS selector before returning the response, ex ".title"
+            wait_for: '',
+            // Set the browser window width in pixel
+            window_width: 1920,
+            // Set the browser window height in pixel
+            window_height: 1080,
+        },
+        headers: {
+            // Forward custom headers to the target website
+            key: 'value'
+        },
+        cookies: {
+            // Forward custom cookies to the target website
+            name: 'value'
+        },
     });
 
     var decoder = new TextDecoder();
