@@ -23,7 +23,9 @@ const scrapingbee = require('scrapingbee');
 
 async function get(url) {
     var client = new scrapingbee.ScrapingBeeClient('REPLACE-WITH-YOUR-API-KEY');
-    var response = await client.get(url, {
+    var response = await client.get({
+        // The URL you want to scrape
+        url: url,
         params: {
             // Block ads on the page you want to scrape
             block_ads: false,
