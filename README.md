@@ -106,10 +106,13 @@ const scrapingbee = require('scrapingbee');
 
 async function screenshot(url, path) {
     var client = new scrapingbee.ScrapingBeeClient('REPLACE-WITH-YOUR-API-KEY');
-    var response = await client.get(url, {
-        screenshot: true, // Take a screenshot
-        screenshot_full_page: true, // Specify that we need the full height
-        window_width: 375, // Specify a mobile width in pixel
+    var response = await client.get({
+        url: url,
+        params: {
+            screenshot: true, // Take a screenshot
+            screenshot_full_page: true, // Specify that we need the full height
+            window_width: 375, // Specify a mobile width in pixel
+        }
     });
 
     fs.writeFileSync(path, response.data);
