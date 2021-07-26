@@ -14,23 +14,27 @@ export class ScrapingBeeClient {
 
     private request(
         method: string,
-        url: string,
-        params: Record<string, any> = {},
-        headers: Record<string, string> = {},
-        cookies?: string | Record<string, string>,
-        data?: any
+        config: Record<string, any> = {},
     ): AxiosPromise {
-        headers = process_headers(headers);
+        let params = config.params || {};
 
+        let raw_headers = config.headers || {};
+        let headers = process_headers(raw_headers);
+
+        let cookies = config.cookies || null;
         if (cookies != null) {
             params['cookies'] = cookies;
         }
+
+        let url = config.url;
+
+        let data = config.data || {};
 
         params['api_key'] = this.api_key;
         params['url'] = url;
         params = process_params(params);
 
-        var axios_params: AxiosRequestConfig = {
+        let axios_params: AxiosRequestConfig = {
             method: method as Method,
             headers: headers,
             params: params,
@@ -42,21 +46,14 @@ export class ScrapingBeeClient {
     }
 
     public get(
-        url: string,
-        params?: Record<string, any>,
-        headers?: Record<string, string>,
-        cookies?: string | Record<string, string>
+        config?: Record<string, any>,
     ) {
-        return this.request('GET', url, params, headers, cookies);
+        return this.request('GET', config);
     }
 
     public post(
-        url: string,
-        params?: Record<string, any>,
-        headers?: Record<string, string>,
-        cookies?: string | Record<string, string>,
-        data?: any
+        config?: Record<string, any>,
     ) {
-        return this.request('POST', url, params, data, headers, cookies);
+        return this.request('POST', config);
     }
 }
