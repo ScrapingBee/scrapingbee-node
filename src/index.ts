@@ -20,6 +20,9 @@ export class ScrapingBeeClient {
 
         let raw_headers = config.headers || {};
         let headers = process_headers(raw_headers);
+        if (headers != {}) {
+            params['forward_headers'] = true;
+        }
 
         let cookies = config.cookies || null;
         if (cookies != null) {

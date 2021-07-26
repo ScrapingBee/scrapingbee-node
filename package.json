@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "scrapingbee": "^1.1.0"
+    "scrapingbee": "^1.1.0",
+    "yargs-unparser": "^2.0.0"
   }
 }

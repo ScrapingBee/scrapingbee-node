@@ -27,7 +27,7 @@ describe('test_ScrapingBeeClient.get', function () {
     it('should prefix header names with Spb- and set forward_headers', async function () {
         var res = await client.get({url: target_url, headers: { 'Content-Type': 'text/html; charset=utf-8'}});
         assert.deepStrictEqual(res.config.headers['Spb-Content-Type'], 'text/html; charset=utf-8');
-        assert.deepStrictEqual(res.config.headers['forward_headers'], true);
+        assert.deepStrictEqual(res.config.params['forward_headers'], true);
     });
 
     it('should format the cookies and add them to the query params', async function () {

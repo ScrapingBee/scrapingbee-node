@@ -15,6 +15,9 @@ class ScrapingBeeClient {
         let params = config.params || {};
         let raw_headers = config.headers || {};
         let headers = utils_1.process_headers(raw_headers);
+        if (headers != {}) {
+            params['forward_headers'] = true;
+        }
         let cookies = config.cookies || null;
         if (cookies != null) {
             params['cookies'] = cookies;
