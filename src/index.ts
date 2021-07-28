@@ -23,6 +23,7 @@ export class ScrapingBeeClient {
         if (headers != {}) {
             params['forward_headers'] = true;
         }
+        headers["User-Agent"] = `ScrapingBee-Node/${ LIB_VERSION }`
 
         let cookies = config.cookies || null;
         if (cookies != null) {

@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ScrapingBeeClient = void 0;
 const axios_1 = __importDefault(require("axios"));
+const version_1 = require("./version");
 const utils_1 = require("./utils");
 const API_URL = 'https://app.scrapingbee.com/api/v1/';
 class ScrapingBeeClient {
@@ -18,6 +19,7 @@ class ScrapingBeeClient {
         if (headers != {}) {
             params['forward_headers'] = true;
         }
+        headers["User-Agent"] = `ScrapingBee-Node/${version_1.LIB_VERSION}`;
         let cookies = config.cookies || null;
         if (cookies != null) {
             params['cookies'] = cookies;
