@@ -19,8 +19,8 @@ function process_cookies(cookies: string | Record<string, string>): string {
     return cookies_array.join(';');
 }
 
-function process_extract_rules(extract_rules: object): string {
-    return encodeURIComponent(JSON.stringify(extract_rules));
+function process_json_stringify_param(param: object): string {
+    return encodeURIComponent(JSON.stringify(param));
 }
 
 function is_empty(value: any) {
@@ -50,7 +50,8 @@ export function process_params(params: Record<string, any>) {
                 clean_params[key] = process_cookies(params[key]);
                 break;
             case 'extract_rules':
-                clean_params[key] = process_extract_rules(params[key]);
+            case 'js_scenario':
+                clean_params[key] = process_json_stringify_param(params[key]);
                 break;
             default:
                 clean_params[key] = params[key];
