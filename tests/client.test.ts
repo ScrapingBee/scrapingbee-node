@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import assert from 'assert';
 import { ScrapingBeeClient } from '../src';
-import { LIB_VERSION } from "../src/version";
+import { LIB_VERSION } from '../src/version';
 
 var mock = new MockAdapter(axios);
 
@@ -13,7 +13,7 @@ describe('test_ScrapingBeeClient.get', function () {
     mock.onGet().reply(200);
 
     it('should make a simple GET request with correct query params', async function () {
-        var res = await client.get({url: target_url});
+        var res = await client.get({ url: target_url });
         assert.deepStrictEqual(res.status, 200);
         assert.deepStrictEqual(res.config.params['api_key'], api_key);
         assert.deepStrictEqual(res.config.params['url'], target_url);
@@ -21,20 +21,20 @@ describe('test_ScrapingBeeClient.get', function () {
     });
 
     it('should add the render_js query param', async function () {
-        var res = await client.get({url: target_url, params:{render_js: true}});
+        var res = await client.get({ url: target_url, params: { render_js: true } });
         assert.deepStrictEqual(res.config.params['render_js'], true);
     });
 
     it('should prefix header names with Spb- and set forward_headers', async function () {
-        var res = await client.get({url: target_url, headers: { 'Content-Type': 'text/html; charset=utf-8'}});
+        var res = await client.get({ url: target_url, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
         assert.deepStrictEqual(res.config.headers['Spb-Content-Type'], 'text/html; charset=utf-8');
-        assert.deepStrictEqual(res.config.headers['User-Agent'], `ScrapingBee-Node/${ LIB_VERSION }`);
+        assert.deepStrictEqual(res.config.headers['User-Agent'], `ScrapingBee-Node/${LIB_VERSION}`);
         assert.deepStrictEqual(res.config.params['forward_headers'], true);
     });
 
     it('should format the cookies and add them to the query params', async function () {
         var cookies = { name1: 'value1', name2: 'value2' };
-        var res = await client.get({url: target_url, cookies: cookies});
+        var res = await client.get({ url: target_url, cookies: cookies });
         assert.deepStrictEqual(res.config.params['cookies'], 'name1=value1;name2=value2');
     });
 
@@ -44,13 +44,28 @@ describe('test_ScrapingBeeClient.get', function () {
             params: {
                 extract_rules: {
                     title: 'h1',
-                    subtitle: '#subtitle'
+                    subtitle: '#subtitle',
                 },
-            }
+            },
         });
         assert.deepStrictEqual(
             res.config.params['extract_rules'],
             '%7B%22title%22%3A%22h1%22%2C%22subtitle%22%3A%22%23subtitle%22%7D'
+        );
+    });
+
+    it('should format the js_scenario and add them to the query params', async function () {
+        var res = await client.get({
+            url: target_url,
+            params: {
+                js_scenario: {
+                    instructions: [{ click: '#buttonId' }],
+                },
+            },
+        });
+        assert.deepStrictEqual(
+            res.config.params['js_scenario'],
+            '%7B%22instructions%22%3A%5B%7B%22click%22%3A%22%23buttonId%22%7D%5D%7D'
         );
     });
 });
@@ -62,7 +77,7 @@ describe('test_ScrapingBeeClient.post', function () {
     mock.onPost().reply(201);
 
     it('should make a simple GET request with correct query params', async function () {
-        var res = await client.post({url: target_url});
+        var res = await client.post({ url: target_url });
         assert.deepStrictEqual(res.status, 201);
         assert.deepStrictEqual(res.config.params['api_key'], api_key);
         assert.deepStrictEqual(res.config.params['url'], target_url);

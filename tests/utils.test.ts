@@ -36,6 +36,19 @@ describe('test_process_extract_rules', function () {
     });
 });
 
+describe('test_process_js_scenario', function () {
+    it('should stringify JSON', function () {
+        var js_scenario = {
+            instructions: [{ click: '#buttonId' }],
+        };
+        var res = process_params({ js_scenario: js_scenario });
+        assert.strictEqual(
+            res['js_scenario'],
+            '%7B%22instructions%22%3A%5B%7B%22click%22%3A%22%23buttonId%22%7D%5D%7D'
+        );
+    });
+});
+
 describe('test_basic_process_params', function () {
     it('should keep the boolean parameter', function () {
         var bool = true;
