@@ -18,7 +18,7 @@ function process_cookies(cookies) {
     return cookies_array.join(';');
 }
 function process_json_stringify_param(param) {
-    return encodeURIComponent(JSON.stringify(param));
+    return JSON.stringify(param);
 }
 function is_empty(value) {
     switch (typeof value) {

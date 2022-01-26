@@ -20,7 +20,7 @@ function process_cookies(cookies: string | Record<string, string>): string {
 }
 
 function process_json_stringify_param(param: object): string {
-    return encodeURIComponent(JSON.stringify(param));
+    return JSON.stringify(param);
 }
 
 function is_empty(value: any) {

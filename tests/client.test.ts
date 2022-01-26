@@ -50,7 +50,7 @@ describe('test_ScrapingBeeClient.get', function () {
         });
         assert.deepStrictEqual(
             res.config.params['extract_rules'],
-            '%7B%22title%22%3A%22h1%22%2C%22subtitle%22%3A%22%23subtitle%22%7D'
+            '{"title":"h1","subtitle":"#subtitle"}'
         );
     });
 
@@ -65,7 +65,7 @@ describe('test_ScrapingBeeClient.get', function () {
         });
         assert.deepStrictEqual(
             res.config.params['js_scenario'],
-            '%7B%22instructions%22%3A%5B%7B%22click%22%3A%22%23buttonId%22%7D%5D%7D'
+            '{"instructions":[{"click":"#buttonId"}]}'
         );
     });
 });
