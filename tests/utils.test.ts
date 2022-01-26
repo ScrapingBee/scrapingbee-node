@@ -32,7 +32,7 @@ describe('test_process_extract_rules', function () {
     it('should stringify JSON', function () {
         var extract_rules = { title: '.title' };
         var res = process_params({ extract_rules: extract_rules });
-        assert.strictEqual(res['extract_rules'], '%7B%22title%22%3A%22.title%22%7D');
+        assert.strictEqual(res['extract_rules'], '{"title":".title"}');
     });
 });
 
@@ -44,7 +44,7 @@ describe('test_process_js_scenario', function () {
         var res = process_params({ js_scenario: js_scenario });
         assert.strictEqual(
             res['js_scenario'],
-            '%7B%22instructions%22%3A%5B%7B%22click%22%3A%22%23buttonId%22%7D%5D%7D'
+            '{"instructions":[{"click":"#buttonId"}]}'
         );
     });
 });
