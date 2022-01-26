@@ -1,6 +1,6 @@
 {
   "name": "scrapingbee",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "ScrapingBee Node SDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -40,7 +40,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "axios": "^0.21.2",
+    "axios": "^0.25.0",
     "scrapingbee": "^1.1.0",
     "yargs-unparser": "^2.0.0"
   }

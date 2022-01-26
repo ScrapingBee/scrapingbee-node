@@ -17,6 +17,7 @@ describe('test_ScrapingBeeClient.get', function () {
         assert.deepStrictEqual(res.status, 200);
         assert.deepStrictEqual(res.config.params['api_key'], api_key);
         assert.deepStrictEqual(res.config.params['url'], target_url);
+        // @ts-ignore
         assert.match(res.config.headers['User-Agent'], /^ScrapingBee-Node\//);
     });
 
@@ -27,7 +28,9 @@ describe('test_ScrapingBeeClient.get', function () {
 
     it('should prefix header names with Spb- and set forward_headers', async function () {
         var res = await client.get({ url: target_url, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+        // @ts-ignore
         assert.deepStrictEqual(res.config.headers['Spb-Content-Type'], 'text/html; charset=utf-8');
+        // @ts-ignore
         assert.deepStrictEqual(res.config.headers['User-Agent'], `ScrapingBee-Node/${LIB_VERSION}`);
         assert.deepStrictEqual(res.config.params['forward_headers'], true);
     });
@@ -81,6 +84,7 @@ describe('test_ScrapingBeeClient.post', function () {
         assert.deepStrictEqual(res.status, 201);
         assert.deepStrictEqual(res.config.params['api_key'], api_key);
         assert.deepStrictEqual(res.config.params['url'], target_url);
+        // @ts-ignore
         assert.match(res.config.headers['User-Agent'], /^ScrapingBee-Node\//);
     });
 });
