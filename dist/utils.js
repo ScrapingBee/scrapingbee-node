@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.process_headers = exports.process_params = void 0;
 const version_1 = require("./version");
-const DEFAULT_HEADERS = { 'User-Agent': 'ScrapingBee-Node/' + version_1.LIB_VERSION };
+const DEFAULT_HEADERS = { 'User-Agent': `ScrapingBee-Node/${version_1.LIB_VERSION}` };
 function process_js_snippet(js_snippet) {
     return Buffer.from(js_snippet).toString('base64');
 }

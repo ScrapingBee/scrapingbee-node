@@ -1,12 +1,12 @@
 import { LIB_VERSION } from './version';
 
-const DEFAULT_HEADERS: Record<string, any> = { 'User-Agent': 'ScrapingBee-Node/' + LIB_VERSION };
+const DEFAULT_HEADERS: Record<string, any> = { 'User-Agent': `ScrapingBee-Node/${LIB_VERSION}` };
 
 function process_js_snippet(js_snippet: string): string {
     return Buffer.from(js_snippet).toString('base64');
 }
 
-function process_cookies(cookies: string | Record<string, string>): string {
+function process_cookies(cookies: string | Record<string, any>): string {
     if (typeof cookies === 'string') {
         return cookies;
     }
