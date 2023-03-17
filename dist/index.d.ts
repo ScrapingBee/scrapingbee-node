@@ -1,15 +1,15 @@
 import { AxiosPromise } from 'axios';
-export interface ScbParams {
+export declare type ScbParams = {
     block_ads?: boolean;
     block_resources?: boolean;
-    cookies?: string;
+    cookies?: string | Record<string, any>;
     country_code?: string;
     custom_google?: boolean;
     device?: string;
-    extract_rules?: string;
+    extract_rules?: object | string;
     forward_headers?: boolean;
     forward_headers_pure?: boolean;
-    js_scenario?: string;
+    js_scenario?: object | string;
     json_response?: boolean;
     own_proxy?: string;
     premium_proxy?: boolean;
@@ -26,12 +26,14 @@ export interface ScbParams {
     wait_for?: string;
     window_height?: number;
     window_width?: number;
-}
+} & {
+    [key: string]: any;
+};
 export interface ScbConfig {
     url: string;
     headers?: Record<string, any>;
     cookies?: string | Record<string, any>;
-    params?: Record<string, any> | ScbParams;
+    params?: ScbParams;
     data?: any;
     retries?: number;
 }

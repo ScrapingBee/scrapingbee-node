@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.process_headers = exports.process_params = void 0;
+exports.process_headers = exports.process_params = exports.is_empty = void 0;
 const version_1 = require("./version");
 const DEFAULT_HEADERS = { 'User-Agent': `ScrapingBee-Node/${version_1.LIB_VERSION}` };
 function process_js_snippet(js_snippet) {
@@ -21,15 +21,15 @@ function process_json_stringify_param(param) {
     return JSON.stringify(param);
 }
 function is_empty(value) {
-    switch (typeof value) {
-        case 'string':
-            return value === '';
-        case 'object':
-            return value && Object.keys(value).length === 0 && value.constructor === Object;
-        default:
-            return false;
+    if (typeof value === 'number') {
+        return false;
     }
+    if (typeof value === 'object' && value !== null) {
+        return Object.keys(value).length === 0;
+    }
+    return !value;
 }
+exports.is_empty = is_empty;
 function process_params(params) {
     var clean_params = {};
     for (let key in params) {
@@ -45,7 +45,8 @@ function process_params(params) {
                 break;
             case 'extract_rules':
             case 'js_scenario':
-                clean_params[key] = process_json_stringify_param(params[key]);
+                clean_params[key] =
+                    typeof params[key] === 'string' ? params[key] : process_json_stringify_param(params[key]);
                 break;
             default:
                 clean_params[key] = params[key];
@@ -54,7 +55,7 @@ function process_params(params) {
     return clean_params;
 }
 exports.process_params = process_params;
-function process_headers(headers, prefix = 'Spb-') {
+function process_headers(headers = {}, prefix = 'Spb-') {
     var new_headers = {};
     for (let key in headers) {
         new_headers[`${prefix}${key}`] = headers[key];

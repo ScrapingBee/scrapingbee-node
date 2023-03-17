@@ -13,29 +13,24 @@ class ScrapingBeeClient {
         this.api_key = api_key;
     }
     request(method, config) {
+        var _a;
         let params = config.params || {};
         // Headers
-        let raw_headers = config.headers || {};
-        let headers = utils_1.process_headers(raw_headers);
-        if (Object.keys(raw_headers).length > 0) {
-            params['forward_headers'] = true;
+        let headers = utils_1.process_headers(config.headers);
+        if (Object.keys((_a = config.headers) !== null && _a !== void 0 ? _a : {}).length > 0) {
+            params.forward_headers = true;
         }
         // Cookies
-        let cookies = config.cookies || null;
-        if (cookies != null) {
-            params['cookies'] = cookies;
-        }
+        params.cookies = config.cookies;
         // Other query params
         params['api_key'] = this.api_key;
         params['url'] = config.url;
         params = utils_1.process_params(params);
-        // Request body
-        let data = config.data || {};
         let axios_params = {
             method: method,
             headers: headers,
             params: params,
-            data: data,
+            data: config.data,
             responseType: 'arraybuffer',
         };
         // Retry policy

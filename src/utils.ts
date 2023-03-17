@@ -23,15 +23,15 @@ function process_json_stringify_param(param: object): string {
     return JSON.stringify(param);
 }
 
-function is_empty(value: any) {
-    switch (typeof value) {
-        case 'string':
-            return value === '';
-        case 'object':
-            return value && Object.keys(value).length === 0 && value.constructor === Object;
-        default:
-            return false;
+export function is_empty(value: any) {
+    if (typeof value === 'number') {
+        return false;
     }
+    if (typeof value === 'object' && value !== null) {
+        return Object.keys(value).length === 0;
+    }
+
+    return !value;
 }
 
 export function process_params(params: Record<string, any>) {
@@ -51,7 +51,8 @@ export function process_params(params: Record<string, any>) {
                 break;
             case 'extract_rules':
             case 'js_scenario':
-                clean_params[key] = process_json_stringify_param(params[key]);
+                clean_params[key] =
+                    typeof params[key] === 'string' ? params[key] : process_json_stringify_param(params[key]);
                 break;
             default:
                 clean_params[key] = params[key];
@@ -61,7 +62,7 @@ export function process_params(params: Record<string, any>) {
     return clean_params;
 }
 
-export function process_headers(headers: Record<string, any>, prefix: string = 'Spb-'): Record<string, any> {
+export function process_headers(headers: Record<string, any> = {}, prefix: string = 'Spb-'): Record<string, any> {
     var new_headers: Record<string, any> = {};
 
     for (let key in headers) {
