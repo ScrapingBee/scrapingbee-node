@@ -134,7 +134,7 @@ Client include a retry mecanism for 5XX requests.
 const scb = require('scrapingbee');
 
 async function get(url) {
-    let client = new scb.ScrapingBeeClient('ELLIEELLIEELLIE');
+    let client = new scb.ScrapingBeeClient('REPLACE-WITH-YOUR-API-KEY');
     let resp = await client.get({ url: url, params: { render_js: false }, retries: 5 });
 
     let decoder = new TextDecoder();
