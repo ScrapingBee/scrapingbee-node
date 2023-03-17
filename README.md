@@ -142,5 +142,5 @@ async function get(url) {
     console.log(text);
 }
 
-get('https://httpbin-scrapingbee.cleverapps.io/html').catch((e) => console.log('A problem occurs : ' + e.message));
+get('https://httpbin-scrapingbee.cleverapps.io/html').catch((e) => console.log('A problem occured: ' + e.message));
 ```
