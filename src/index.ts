@@ -5,7 +5,7 @@ import { process_params, process_headers } from './utils';
 
 const API_URL: string = 'https://app.scrapingbee.com/api/v1/';
 
-export type ScbParams = {
+export type SpbParams = {
     block_ads?: boolean;
     block_resources?: boolean;
     cookies?: string | Record<string, any>;
@@ -36,11 +36,11 @@ export type ScbParams = {
     [key: string]: any;
 };
 
-export interface ScbConfig {
+export interface SpbConfig {
     url: string;
     headers?: Record<string, any>;
     cookies?: string | Record<string, any>;
-    params?: ScbParams;
+    params?: SpbParams;
     data?: any;
     retries?: number;
 }
@@ -52,7 +52,7 @@ export class ScrapingBeeClient {
         this.api_key = api_key;
     }
 
-    private request(method: string, config: ScbConfig): AxiosPromise {
+    private request(method: string, config: SpbConfig): AxiosPromise {
         let params = config.params || {};
 
         // Headers
@@ -85,11 +85,11 @@ export class ScrapingBeeClient {
         return axios(API_URL, axios_params);
     }
 
-    public get(config: ScbConfig) {
+    public get(config: SpbConfig) {
         return this.request('GET', config);
     }
 
-    public post(config: ScbConfig) {
+    public post(config: SpbConfig) {
         return this.request('POST', config);
     }
 }

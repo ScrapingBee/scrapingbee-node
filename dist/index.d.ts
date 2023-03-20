@@ -1,5 +1,5 @@
 import { AxiosPromise } from 'axios';
-export declare type ScbParams = {
+export declare type SpbParams = {
     block_ads?: boolean;
     block_resources?: boolean;
     cookies?: string | Record<string, any>;
@@ -29,11 +29,11 @@ export declare type ScbParams = {
 } & {
     [key: string]: any;
 };
-export interface ScbConfig {
+export interface SpbConfig {
     url: string;
     headers?: Record<string, any>;
     cookies?: string | Record<string, any>;
-    params?: ScbParams;
+    params?: SpbParams;
     data?: any;
     retries?: number;
 }
@@ -41,6 +41,6 @@ export declare class ScrapingBeeClient {
     readonly api_key: string;
     constructor(api_key: string);
     private request;
-    get(config: ScbConfig): AxiosPromise<any>;
-    post(config: ScbConfig): AxiosPromise<any>;
+    get(config: SpbConfig): AxiosPromise<any>;
+    post(config: SpbConfig): AxiosPromise<any>;
 }
