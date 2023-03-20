@@ -128,7 +128,7 @@ screenshot('https://httpbin-scrapingbee.cleverapps.io/html', './httpbin.png').ca
 
 ## Retries
 
-Client include a retry mecanism for 5XX requests.
+The client includes a retry mechanism for 5XX responses.
 
 ```javascript
 const spb = require('scrapingbee');
@@ -142,5 +142,5 @@ async function get(url) {
     console.log(text);
 }
 
-get('https://httpbin-scrapingbee.cleverapps.io/html').catch((e) => console.log('A problem occurs : ' + e.message));
+get('https://httpbin-scrapingbee.cleverapps.io/html').catch((e) => console.log('A problem occured: ' + e.message));
 ```
