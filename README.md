@@ -125,3 +125,22 @@ screenshot('https://httpbin-scrapingbee.cleverapps.io/html', './httpbin.png').ca
     console.log('A problem occurs : ' + e.message)
 );
 ```
+
+## Retries
+
+The client includes a retry mechanism for 5XX responses.
+
+```javascript
+const spb = require('scrapingbee');
+
+async function get(url) {
+    let client = new spb.ScrapingBeeClient('REPLACE-WITH-YOUR-API-KEY');
+    let resp = await client.get({ url: url, params: { render_js: false }, retries: 5 });
+
+    let decoder = new TextDecoder();
+    let text = decoder.decode(resp.data);
+    console.log(text);
+}
+
+get('https://httpbin-scrapingbee.cleverapps.io/html').catch((e) => console.log('A problem occured: ' + e.message));
+```

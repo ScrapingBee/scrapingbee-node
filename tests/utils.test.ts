@@ -1,5 +1,23 @@
 import assert from 'assert';
-import { process_params, process_headers } from '../src/utils';
+import { is_empty, process_params, process_headers } from '../src/utils';
+
+describe('test_is_empty', function () {
+    it('should return true for null', function () {
+        assert.strictEqual(is_empty(null), true);
+    });
+    it('should return true for undefined', function () {
+        assert.strictEqual(is_empty(undefined), true);
+    });
+    it('should return true for empty string', function () {
+        assert.strictEqual(is_empty(''), true);
+    });
+    it('should return true for empty object', function () {
+        assert.strictEqual(is_empty({}), true);
+    });
+    it('should return false for number', function () {
+        assert.strictEqual(is_empty(0), false);
+    });
+});
 
 describe('test_process_js_snippet', function () {
     it('should return a base64 buffer', function () {
@@ -29,6 +47,11 @@ describe('test_process_cookies', function () {
 });
 
 describe('test_process_extract_rules', function () {
+    it('should return the same string', function () {
+        var extract_rules = '{"title":".title"}';
+        var res = process_params({ extract_rules: extract_rules });
+        assert.strictEqual(res['extract_rules'], '{"title":".title"}');
+    });
     it('should stringify JSON', function () {
         var extract_rules = { title: '.title' };
         var res = process_params({ extract_rules: extract_rules });
@@ -42,10 +65,7 @@ describe('test_process_js_scenario', function () {
             instructions: [{ click: '#buttonId' }],
         };
         var res = process_params({ js_scenario: js_scenario });
-        assert.strictEqual(
-            res['js_scenario'],
-            '{"instructions":[{"click":"#buttonId"}]}'
-        );
+        assert.strictEqual(res['js_scenario'], '{"instructions":[{"click":"#buttonId"}]}');
     });
 });
 
