@@ -79,6 +79,9 @@ async function get(url) {
             // Forward custom cookies to the target website
             name: 'value',
         },
+        // `timeout` specifies the number of milliseconds before the request times out.
+        // If the request takes longer than `timeout`, the request will be aborted.
+        timeout: 10000, // here 10sec, default is `0` (no timeout)
     });
 
     var decoder = new TextDecoder();

@@ -13,7 +13,7 @@ class ScrapingBeeClient {
         this.api_key = api_key;
     }
     request(method, config) {
-        var _a;
+        var _a, _b;
         let params = config.params || {};
         // Headers
         let headers = utils_1.process_headers(config.headers);
@@ -32,6 +32,7 @@ class ScrapingBeeClient {
             params: params,
             data: config.data,
             responseType: 'arraybuffer',
+            timeout: (_b = config.timeout) !== null && _b !== void 0 ? _b : 0,
         };
         // Retry policy
         if (config.retries !== undefined) {

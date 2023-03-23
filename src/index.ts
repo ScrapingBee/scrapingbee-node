@@ -29,6 +29,7 @@ export type SpbParams = {
     timeout?: number;
     transparent_status_code?: boolean;
     wait?: number;
+    wait_browser?: string | Array<string>;
     wait_for?: string;
     window_height?: number;
     window_width?: number;
@@ -43,6 +44,7 @@ export interface SpbConfig {
     params?: SpbParams;
     data?: any;
     retries?: number;
+    timeout?: number;
 }
 
 export class ScrapingBeeClient {
@@ -75,6 +77,7 @@ export class ScrapingBeeClient {
             params: params,
             data: config.data,
             responseType: 'arraybuffer',
+            timeout: config.timeout ?? 0,
         };
 
         // Retry policy
