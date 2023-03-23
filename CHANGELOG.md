@@ -13,4 +13,4 @@
 ### Features
 
 -   Added `SpbConfig` and `SpbParams` to get hints when building an API call ([#4](https://github.com/ScrapingBee/scrapingbee-node/issues/4))
--   Added `retries` mecanism on 5XX API call ([#5](https://github.com/ScrapingBee/scrapingbee-node/issues/5))
+-   Added `retries` mechanism on 5XX API call ([#5](https://github.com/ScrapingBee/scrapingbee-node/issues/5))
