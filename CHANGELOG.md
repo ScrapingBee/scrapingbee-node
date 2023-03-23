@@ -4,6 +4,7 @@
 
 ### Features
 
+-   Added this `CHANGELOG.md` file
 -   Added `wait_browser` parameter to `SpbParams` for auto completion purpose
 -   Added `timeout` parameter to `SpbConfig` ([#7](https://github.com/ScrapingBee/scrapingbee-node/issues/7))
 
