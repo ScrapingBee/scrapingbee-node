@@ -4,7 +4,7 @@
 
 ## Installation
 
-You can install ScrapingBee Python SDK with npm.
+You can install ScrapingBee Node SDK with npm.
 
 ```bash
 npm install scrapingbee
@@ -30,7 +30,7 @@ async function get(url) {
             // Block ads on the page you want to scrape
             block_ads: false,
             // Block images and CSS on the page you want to scrape
-            block_ressources: true,
+            block_resources: true,
             // Premium proxy geolocation
             country_code: '',
             // Control the device the request will be sent from
