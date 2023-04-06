@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.7.2](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.7.1...v1.7.2) (2023-04-06)
+
+### Bugfix
+
+-   Fix typos in `README.md` ([#9](https://github.com/ScrapingBee/scrapingbee-node/pull/9))
+
 ## [1.7.1](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.7.0...v1.7.1) (2023-03-23)
 
 ### Features
