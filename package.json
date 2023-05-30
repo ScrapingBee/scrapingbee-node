@@ -1,6 +1,6 @@
 {
   "name": "scrapingbee",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "description": "ScrapingBee Node SDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

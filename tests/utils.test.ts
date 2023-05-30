@@ -17,6 +17,9 @@ describe('test_is_empty', function () {
     it('should return false for number', function () {
         assert.strictEqual(is_empty(0), false);
     });
+    it('should return false for boolean', function () {
+        assert.strictEqual(is_empty(false), false);
+    });
 });
 
 describe('test_process_js_snippet', function () {

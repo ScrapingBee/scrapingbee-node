@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.7.4](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.7.3...v1.7.4) (2023-05-30)
+
+### Bugfix
+
+-   Fix bug with boolean query parameters
+
 ## [1.7.3](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.7.2...v1.7.3) (2023-05-11)
 
 ### Features
