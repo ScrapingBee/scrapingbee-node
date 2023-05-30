@@ -24,7 +24,7 @@ function process_json_stringify_param(param: object): string {
 }
 
 export function is_empty(value: any) {
-    if (typeof value === 'number') {
+    if (typeof value === 'number' || typeof value === 'boolean') {
         return false;
     }
     if (typeof value === 'object' && value !== null) {
