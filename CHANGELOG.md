@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.7.5](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.7.4...v1.7.5) (2023-06-06)
+
+### Bugfix
+
+-   Update `axios` to 1.7.7 to fix security vulnerabilities ([#14](https://github.com/ScrapingBee/scrapingbee-node/issues/14))
+
 ## [1.7.4](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.7.3...v1.7.4) (2023-05-30)
 
 ### Bugfix
