@@ -13,7 +13,7 @@ export type SpbParams = {
     custom_google?: boolean;
     device?: string;
     extract_rules?: object | string;
-    ai_extract_rules?: object | string;
+    ai_extract_rules?: { summary: string };
     forward_headers?: boolean;
     forward_headers_pure?: boolean;
     js_scenario?: object | string;
