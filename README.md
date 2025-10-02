@@ -37,6 +37,8 @@ async function get(url) {
             device: 'desktop',
             // Use some data extraction rules
             extract_rules: { title: 'h1' },
+            // Use AI data extraction rules
+            ai_extract_rules: { summary: '5 words summary of the post' },
             // Wrap response in JSON
             json_response: false,
             // JavaScript scenario to execute (clicking on button, scrolling ...)

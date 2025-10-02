@@ -45,6 +45,7 @@ function process_params(params) {
                 break;
             case 'extract_rules':
             case 'js_scenario':
+            case 'ai_extract_rules':
                 clean_params[key] =
                     typeof params[key] === 'string' ? params[key] : process_json_stringify_param(params[key]);
                 break;
