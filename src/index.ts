@@ -3,8 +3,11 @@ import axiosRetry from 'axios-retry';
 
 import { process_params, process_headers } from './utils';
 
-const API_URL: string = 'https://app.scrapingbee.com/api/v1/';
+const API_URL: string = 'https://app.scrapingbee.com/api/v1/'; // WILL BE REMOVED IN A FUTURE VERSION
+const GOOGLE_API_URL: string = 'https://app.scrapingbee.com/api/v1/store/google';
+const AMAZON_SEARCH_API_URL: string = 'https://app.scrapingbee.com/api/v1/amazon/search';
 
+// WILL BE REMOVED IN A FUTURE VERSION
 export type SpbParams = {
     block_ads?: boolean;
     block_resources?: boolean;
@@ -38,12 +41,60 @@ export type SpbParams = {
     [key: string]: any;
 };
 
+export type GoogleSearchParams = {
+    add_html?: boolean;
+    country_code?: string;
+    device?: string;
+    extra_params?: string;
+    language?: string;
+    light_request?: boolean;
+    nfpr?: boolean;
+    page?: number;
+    search_type?: string;
+} & {
+    [key: string]: any;
+};
+
+export type AmazonSearchParams = {
+    add_html?: boolean;
+    category_id?: string;
+    country?: string;
+    currency?: string;
+    device?: string;
+    domain?: string;
+    language?: string;
+    light_request?: boolean;
+    merchant_id?: string;
+    pages?: number;
+    screenshot?: boolean;
+    sort_by?: string;
+    start_page?: number;
+    zip_code?: string;
+} & {
+    [key: string]: any;
+};
+
+// WILL BE REMOVED IN A FUTURE VERSION
 export interface SpbConfig {
     url: string;
     headers?: Record<string, any>;
     cookies?: string | Record<string, any>;
     params?: SpbParams;
     data?: any;
+    retries?: number;
+    timeout?: number;
+}
+
+export interface GoogleSearchConfig {
+    search: string;
+    params?: GoogleSearchParams;
+    retries?: number;
+    timeout?: number;
+}
+
+export interface AmazonSearchConfig {
+    query: string;
+    params?: AmazonSearchParams;
     retries?: number;
     timeout?: number;
 }
@@ -55,27 +106,14 @@ export class ScrapingBeeClient {
         this.api_key = api_key;
     }
 
-    private request(method: string, config: SpbConfig): AxiosPromise {
-        let params = config.params || {};
+    private request(config: Record<string, any>): AxiosPromise {
+        config.params['api_key'] = this.api_key;
 
-        // Headers
-        let headers = process_headers(config.headers);
-        if (Object.keys(config.headers ?? {}).length > 0) {
-            params.forward_headers = true;
-        }
-
-        // Cookies
-        params.cookies = config.cookies;
-
-        // Other query params
-        params['api_key'] = this.api_key;
-        params['url'] = config.url;
-        params = process_params(params);
-
-        let axios_params: AxiosRequestConfig = {
-            method: method as Method,
-            headers: headers,
-            params: params,
+        const axiosConfig: AxiosRequestConfig = {
+            method: config.method as Method,
+            url: config.endpoint,
+            params: config.params,
+            headers: config.headers,
             data: config.data,
             responseType: 'arraybuffer',
             timeout: config.timeout ?? 0,
@@ -86,14 +124,85 @@ export class ScrapingBeeClient {
             axiosRetry(axios, { retries: config.retries });
         }
 
-        return axios(API_URL, axios_params);
+        return axios(axiosConfig);
     }
 
-    public get(config: SpbConfig) {
-        return this.request('GET', config);
+    // WILL BE REMOVED IN A FUTURE VERSION
+    public get(config: SpbConfig): AxiosPromise {
+        let params: Record<string, any> = {
+            ...config.params,
+            url: config.url,
+            cookies: config.cookies
+        };
+
+        let headers = process_headers(config.headers);
+        if (Object.keys(config.headers ?? {}).length > 0) {
+            params.forward_headers = true;
+        }
+
+        return this.request({
+            method: 'GET',
+            endpoint: API_URL,
+            params: process_params(params),
+            headers: headers,
+            data: config.data,
+            retries: config.retries,
+            timeout: config.timeout,
+        });
     }
 
-    public post(config: SpbConfig) {
-        return this.request('POST', config);
+    // WILL BE REMOVED IN A FUTURE VERSION
+    public post(config: SpbConfig): AxiosPromise {
+        let params: Record<string, any> = {
+            ...config.params,
+            url: config.url,
+            cookies: config.cookies
+        };
+
+        let headers = process_headers(config.headers);
+        if (Object.keys(config.headers ?? {}).length > 0) {
+            params.forward_headers = true;
+        }
+
+        return this.request({
+            method: 'POST',
+            endpoint: API_URL,
+            params: process_params(params),
+            headers: headers,
+            data: config.data,
+            retries: config.retries,
+            timeout: config.timeout,
+        });
     }
+
+    public googleSearch(config: GoogleSearchConfig): AxiosPromise {
+        const params: Record<string, any> = {
+            search: config.search,
+            ...config.params,
+        };
+
+        return this.request({
+            method: 'GET',
+            endpoint: GOOGLE_API_URL,
+            params: process_params(params),
+            retries: config.retries,
+            timeout: config.timeout,
+        });
+    }
+
+    public amazonSearch(config: AmazonSearchConfig): AxiosPromise {
+        const params: Record<string, any> = {
+            query: config.query,
+            ...config.params,
+        };
+
+        return this.request({
+            method: 'GET',
+            endpoint: AMAZON_SEARCH_API_URL,
+            params,
+            retries: config.retries,
+            timeout: config.timeout,
+        });
+    }
+
 }

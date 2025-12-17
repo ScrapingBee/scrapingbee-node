@@ -33,6 +33,37 @@ export declare type SpbParams = {
 } & {
     [key: string]: any;
 };
+export declare type GoogleSearchParams = {
+    add_html?: boolean;
+    country_code?: string;
+    device?: string;
+    extra_params?: string;
+    language?: string;
+    light_request?: boolean;
+    nfpr?: boolean;
+    page?: number;
+    search_type?: string;
+} & {
+    [key: string]: any;
+};
+export declare type AmazonSearchParams = {
+    add_html?: boolean;
+    category_id?: string;
+    country?: string;
+    currency?: string;
+    device?: string;
+    domain?: string;
+    language?: string;
+    light_request?: boolean;
+    merchant_id?: string;
+    pages?: number;
+    screenshot?: boolean;
+    sort_by?: string;
+    start_page?: number;
+    zip_code?: string;
+} & {
+    [key: string]: any;
+};
 export interface SpbConfig {
     url: string;
     headers?: Record<string, any>;
@@ -42,10 +73,24 @@ export interface SpbConfig {
     retries?: number;
     timeout?: number;
 }
+export interface GoogleSearchConfig {
+    search: string;
+    params?: GoogleSearchParams;
+    retries?: number;
+    timeout?: number;
+}
+export interface AmazonSearchConfig {
+    query: string;
+    params?: AmazonSearchParams;
+    retries?: number;
+    timeout?: number;
+}
 export declare class ScrapingBeeClient {
     readonly api_key: string;
     constructor(api_key: string);
     private request;
-    get(config: SpbConfig): AxiosPromise<any>;
-    post(config: SpbConfig): AxiosPromise<any>;
+    get(config: SpbConfig): AxiosPromise;
+    post(config: SpbConfig): AxiosPromise;
+    googleSearch(config: GoogleSearchConfig): AxiosPromise;
+    amazonSearch(config: AmazonSearchConfig): AxiosPromise;
 }
