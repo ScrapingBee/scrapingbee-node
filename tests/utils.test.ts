@@ -62,6 +62,21 @@ describe('test_process_extract_rules', function () {
     });
 });
 
+describe('test_process_ai_extract_rules', function () {
+    it('should stringify JSON', function () {
+        var ai_extract_rules = { summary: 'Extract main content' };
+        var res = process_params({ ai_extract_rules: ai_extract_rules });
+        assert.strictEqual(res['ai_extract_rules'], '{"summary":"Extract main content"}');
+    });
+
+    it('should return the same string', function () {
+        var ai_extract_rules = '{"summary":"Extract main content"}';
+        var res = process_params({ ai_extract_rules: ai_extract_rules });
+        assert.strictEqual(res['ai_extract_rules'], '{"summary":"Extract main content"}');
+    });
+});
+
+
 describe('test_process_js_scenario', function () {
     it('should stringify JSON', function () {
         var js_scenario = {

@@ -294,7 +294,7 @@ async function testYouTubeTranscript() {
     console.log('=== Testing YouTube Transcript API ===');
     try {
         const response = await client.youtubeTranscript({
-            video_id: 'q0aFOxT6TNw',
+            video_id: 'eKVTFXQPAhs',
             params: {
                 language: 'en'
             }
