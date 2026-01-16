@@ -1,4 +1,5 @@
 import axios, { AxiosPromise, AxiosRequestConfig, Method } from 'axios';
+import { deprecate } from 'util';
 import axiosRetry from 'axios-retry';
 
 import { process_params, process_headers } from './utils';
@@ -58,7 +59,7 @@ export type HtmlApiParams = {
 
 export interface HtmlApiConfig {
     url: string;
-    method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS'; // Some of these methods are not supported by HTML API
+    method?: 'GET' | 'POST' | 'PUT';
     headers?: Record<string, any>;
     cookies?: string | Record<string, any>;
     params?: HtmlApiParams;
@@ -293,8 +294,10 @@ export class ScrapingBeeClient {
         return axios(axiosConfig);
     }
 
-    // WILL BE REMOVED IN A FUTURE VERSION
-    public get(config: HtmlApiConfig): AxiosPromise {
+        /**
+     * @deprecated Use htmlApi() instead. This method will be removed in version 2.0.0.
+     */
+    public get = deprecate((config: HtmlApiConfig): AxiosPromise => {
         let params: Record<string, any> = {
             ...config.params,
             url: config.url,
@@ -315,10 +318,12 @@ export class ScrapingBeeClient {
             retries: config.retries,
             timeout: config.timeout,
         });
-    }
+    }, 'ScrapingBeeClient.get() is deprecated. Please use client.htmlApi() instead. This method will be removed in version 2.0.0.');
 
-    // WILL BE REMOVED IN A FUTURE VERSION
-    public post(config: HtmlApiConfig): AxiosPromise {
+    /**
+     * @deprecated Use htmlApi() instead. This method will be removed in version 2.0.0.
+     */
+    public post = deprecate((config: HtmlApiConfig): AxiosPromise => {
         let params: Record<string, any> = {
             ...config.params,
             url: config.url,
@@ -339,7 +344,7 @@ export class ScrapingBeeClient {
             retries: config.retries,
             timeout: config.timeout,
         });
-    }
+    }, 'ScrapingBeeClient.post() is deprecated. Please use client.htmlApi() instead. This method will be removed in version 2.0.0.');
 
     public googleSearch(config: GoogleSearchConfig): AxiosPromise {
         const params: Record<string, any> = {

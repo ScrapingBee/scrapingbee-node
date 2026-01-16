@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ScrapingBeeClient = void 0;
 const axios_1 = __importDefault(require("axios"));
+const util_1 = require("util");
 const axios_retry_1 = __importDefault(require("axios-retry"));
 const utils_1 = require("./utils");
 const HTML_API_URL = 'https://app.scrapingbee.com/api/v1/';
@@ -21,6 +22,46 @@ const YOUTUBE_TRAINABILITY_API_URL = 'https://app.scrapingbee.com/api/v1/youtube
 const USAGE_API_URL = 'https://app.scrapingbee.com/api/v1/usage';
 class ScrapingBeeClient {
     constructor(api_key) {
+        /**
+     * @deprecated Use htmlApi() instead. This method will be removed in version 2.0.0.
+     */
+        this.get = util_1.deprecate((config) => {
+            var _a;
+            let params = Object.assign(Object.assign({}, config.params), { url: config.url, cookies: config.cookies });
+            let headers = utils_1.process_headers(config.headers);
+            if (Object.keys((_a = config.headers) !== null && _a !== void 0 ? _a : {}).length > 0) {
+                params.forward_headers = true;
+            }
+            return this.request({
+                method: 'GET',
+                endpoint: HTML_API_URL,
+                params: utils_1.process_params(params),
+                headers: headers,
+                data: config.data,
+                retries: config.retries,
+                timeout: config.timeout,
+            });
+        }, 'ScrapingBeeClient.get() is deprecated. Please use client.htmlApi() instead. This method will be removed in version 2.0.0.');
+        /**
+         * @deprecated Use htmlApi() instead. This method will be removed in version 2.0.0.
+         */
+        this.post = util_1.deprecate((config) => {
+            var _a;
+            let params = Object.assign(Object.assign({}, config.params), { url: config.url, cookies: config.cookies });
+            let headers = utils_1.process_headers(config.headers);
+            if (Object.keys((_a = config.headers) !== null && _a !== void 0 ? _a : {}).length > 0) {
+                params.forward_headers = true;
+            }
+            return this.request({
+                method: 'POST',
+                endpoint: HTML_API_URL,
+                params: utils_1.process_params(params),
+                headers: headers,
+                data: config.data,
+                retries: config.retries,
+                timeout: config.timeout,
+            });
+        }, 'ScrapingBeeClient.post() is deprecated. Please use client.htmlApi() instead. This method will be removed in version 2.0.0.');
         this.api_key = api_key;
     }
     request(config) {
@@ -40,42 +81,6 @@ class ScrapingBeeClient {
             axios_retry_1.default(axios_1.default, { retries: config.retries });
         }
         return axios_1.default(axiosConfig);
-    }
-    // WILL BE REMOVED IN A FUTURE VERSION
-    get(config) {
-        var _a;
-        let params = Object.assign(Object.assign({}, config.params), { url: config.url, cookies: config.cookies });
-        let headers = utils_1.process_headers(config.headers);
-        if (Object.keys((_a = config.headers) !== null && _a !== void 0 ? _a : {}).length > 0) {
-            params.forward_headers = true;
-        }
-        return this.request({
-            method: 'GET',
-            endpoint: HTML_API_URL,
-            params: utils_1.process_params(params),
-            headers: headers,
-            data: config.data,
-            retries: config.retries,
-            timeout: config.timeout,
-        });
-    }
-    // WILL BE REMOVED IN A FUTURE VERSION
-    post(config) {
-        var _a;
-        let params = Object.assign(Object.assign({}, config.params), { url: config.url, cookies: config.cookies });
-        let headers = utils_1.process_headers(config.headers);
-        if (Object.keys((_a = config.headers) !== null && _a !== void 0 ? _a : {}).length > 0) {
-            params.forward_headers = true;
-        }
-        return this.request({
-            method: 'POST',
-            endpoint: HTML_API_URL,
-            params: utils_1.process_params(params),
-            headers: headers,
-            data: config.data,
-            retries: config.retries,
-            timeout: config.timeout,
-        });
     }
     googleSearch(config) {
         const params = Object.assign({ search: config.search }, config.params);

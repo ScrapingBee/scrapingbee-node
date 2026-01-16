@@ -38,7 +38,7 @@ export declare type HtmlApiParams = {
 };
 export interface HtmlApiConfig {
     url: string;
-    method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS';
+    method?: 'GET' | 'POST' | 'PUT';
     headers?: Record<string, any>;
     cookies?: string | Record<string, any>;
     params?: HtmlApiParams;
@@ -216,8 +216,14 @@ export declare class ScrapingBeeClient {
     readonly api_key: string;
     constructor(api_key: string);
     private request;
-    get(config: HtmlApiConfig): AxiosPromise;
-    post(config: HtmlApiConfig): AxiosPromise;
+    /**
+ * @deprecated Use htmlApi() instead. This method will be removed in version 2.0.0.
+ */
+    get: (config: HtmlApiConfig) => AxiosPromise<any>;
+    /**
+     * @deprecated Use htmlApi() instead. This method will be removed in version 2.0.0.
+     */
+    post: (config: HtmlApiConfig) => AxiosPromise<any>;
     googleSearch(config: GoogleSearchConfig): AxiosPromise;
     amazonSearch(config: AmazonSearchConfig): AxiosPromise;
     amazonProduct(config: AmazonProductConfig): AxiosPromise;
