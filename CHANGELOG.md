@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.8.1](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.8.0...v1.8.1) (2026-01-21)
+
+### Security
+
+-   Fix npm vulnerabilities
+-   Update Node version to use the last active LTS
+-   Update GitHub Action workflows 
+
 ## [1.8.0](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.7.5...v1.8.0) (2026-01-19)
 
 ### Features
