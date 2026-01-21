@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.8.1](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.8.0...v1.8.1) (2026-01-20)
+## [1.8.1](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.8.0...v1.8.1) (2026-01-21)
 
 ### Security
 
