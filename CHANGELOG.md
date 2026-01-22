@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.2](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.8.0...v1.8.2) (2026-01-22)
+
+### Bugfix
+
+-   Removed `"scrapingbee": "^1.1.0"` from `package.json` to prevent errors on Node Versions <24 caused by circular dependency.
+
+
 ## [1.8.1](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.8.0...v1.8.1) (2026-01-21)
 
 ### Security
