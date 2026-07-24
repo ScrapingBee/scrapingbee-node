@@ -17,8 +17,10 @@ const WALMART_PRODUCT_API_URL = 'https://app.scrapingbee.com/api/v1/walmart/prod
 const CHATGPT_API_URL = 'https://app.scrapingbee.com/api/v1/chatgpt';
 const YOUTUBE_SEARCH_API_URL = 'https://app.scrapingbee.com/api/v1/youtube/search';
 const YOUTUBE_METADATA_API_URL = 'https://app.scrapingbee.com/api/v1/youtube/metadata';
-const YOUTUBE_TRANSCRIPT_API_URL = 'https://app.scrapingbee.com/api/v1/youtube/transcript';
-const YOUTUBE_TRAINABILITY_API_URL = 'https://app.scrapingbee.com/api/v1/youtube/trainability';
+const YOUTUBE_SUBTITLES_API_URL = 'https://app.scrapingbee.com/api/v1/youtube/subtitles';
+const FAST_SEARCH_API_URL = 'https://app.scrapingbee.com/api/v1/fast_search';
+const AMAZON_PRICING_API_URL = 'https://app.scrapingbee.com/api/v1/amazon/pricing';
+const GEMINI_API_URL = 'https://app.scrapingbee.com/api/v1/gemini';
 const USAGE_API_URL = 'https://app.scrapingbee.com/api/v1/usage';
 class ScrapingBeeClient {
     constructor(api_key) {
@@ -153,9 +155,7 @@ class ScrapingBeeClient {
         });
     }
     youtubeMetadata(config) {
-        const params = {
-            video_id: config.video_id,
-        };
+        const params = Object.assign({ video_id: config.video_id }, config.params);
         return this.request({
             method: 'GET',
             endpoint: YOUTUBE_METADATA_API_URL,
@@ -164,23 +164,41 @@ class ScrapingBeeClient {
             timeout: config.timeout,
         });
     }
-    youtubeTranscript(config) {
+    youtubeSubtitles(config) {
         const params = Object.assign({ video_id: config.video_id }, config.params);
         return this.request({
             method: 'GET',
-            endpoint: YOUTUBE_TRANSCRIPT_API_URL,
+            endpoint: YOUTUBE_SUBTITLES_API_URL,
             params,
             retries: config.retries,
             timeout: config.timeout,
         });
     }
-    youtubeTrainability(config) {
-        const params = {
-            video_id: config.video_id,
-        };
+    fastSearch(config) {
+        const params = Object.assign({ search: config.search }, config.params);
         return this.request({
             method: 'GET',
-            endpoint: YOUTUBE_TRAINABILITY_API_URL,
+            endpoint: FAST_SEARCH_API_URL,
+            params,
+            retries: config.retries,
+            timeout: config.timeout,
+        });
+    }
+    amazonPricing(config) {
+        const params = Object.assign({ asin: config.asin }, config.params);
+        return this.request({
+            method: 'GET',
+            endpoint: AMAZON_PRICING_API_URL,
+            params,
+            retries: config.retries,
+            timeout: config.timeout,
+        });
+    }
+    gemini(config) {
+        const params = Object.assign({ prompt: config.prompt }, config.params);
+        return this.request({
+            method: 'GET',
+            endpoint: GEMINI_API_URL,
             params,
             retries: config.retries,
             timeout: config.timeout,

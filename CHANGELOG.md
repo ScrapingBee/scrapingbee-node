@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.9.0](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.8.2...v1.9.0) (2026-07-24)
+
+### Features
+
+-   Added `fastSearch()` method for Fast Search API
+-   Added `amazonPricing()` method for Amazon Pricing API
+-   Added `gemini()` method for Gemini API
+-   Added `youtubeSubtitles()` method for YouTube Subtitles API (replaces the removed `youtubeTranscript()`)
+-   Expanded param type hints for all endpoints to match the documented API contract (e.g. HTML API `mode`/`max_cost`, Google `pages`/`date_range`/geo/`sort_by`/price filters, Amazon Search `autoselect_variant`, Walmart Search `start_page`)
+-   Added `tag` optional param (request label) to every endpoint's params type except Usage, including a new `YouTubeMetadataParams` type so `youtubeMetadata()` now accepts a `params` object
+
+### Removed
+
+-   Removed `youtubeTranscript()` method (endpoint no longer supported; use `youtubeSubtitles()` instead)
+-   Removed `youtubeTrainability()` method (no longer supported)
+
 ## [1.8.2](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.8.0...v1.8.2) (2026-01-22)
 
 ### Bugfix

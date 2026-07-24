@@ -28,13 +28,13 @@ async function testHtmlGet() {
     console.log('=== Testing HTML API - GET ===');
     try {
         const response = await client.get({
-            url: 'https://httpbin.org/get',
+            url: 'https://httpbingo.org/get',
             params: { render_js: false }
         });
 
         assert(response.status === 200, `Expected status 200, got ${response.status}`);
         assert(response.data, 'Response data is empty');
-        assert(response.data.toString().includes('httpbin'), 'Response does not contain expected content');
+        assert(response.data.toString().includes('httpbingo'), 'Response does not contain expected content');
 
         console.log('Status:', response.status);
         console.log('✅ HTML GET test passed!\n');
@@ -48,7 +48,7 @@ async function testHtmlPost() {
     console.log('=== Testing HTML API - POST ===');
     try {
         const response = await client.post({
-            url: 'https://httpbin.org/post',
+            url: 'https://httpbingo.org/post',
             params: { render_js: false },
             data: 'test=data'
         });
@@ -73,14 +73,14 @@ async function testHtmlApiGet() {
     console.log('=== Testing HTML API (New) - GET ===');
     try {
         const response = await client.htmlApi({
-            url: 'https://httpbin.org/get',
+            url: 'https://httpbingo.org/get',
             method: 'GET',
             params: { render_js: false }
         });
 
         assert(response.status === 200, `Expected status 200, got ${response.status}`);
         assert(response.data, 'Response data is empty');
-        assert(response.data.toString().includes('httpbin'), 'Response does not contain expected content');
+        assert(response.data.toString().includes('httpbingo'), 'Response does not contain expected content');
 
         console.log('Status:', response.status);
         console.log('✅ HTML API GET test passed!\n');
@@ -94,7 +94,7 @@ async function testHtmlApiPost() {
     console.log('=== Testing HTML API (New) - POST ===');
     try {
         const response = await client.htmlApi({
-            url: 'https://httpbin.org/post',
+            url: 'https://httpbingo.org/post',
             method: 'POST',
             params: { render_js: false },
             data: 'test=data'
@@ -213,7 +213,7 @@ async function testHtmlApiJsonResponse() {
     console.log('=== Testing HTML API - JSON Response ===');
     try {
         const response = await client.htmlApi({
-            url: 'https://httpbin.org/get',
+            url: 'https://httpbingo.org/get',
             params: {
                 render_js: false,
                 json_response: true
@@ -243,7 +243,7 @@ async function testHtmlApiWithHeaders() {
     console.log('=== Testing HTML API - Custom Headers ===');
     try {
         const response = await client.htmlApi({
-            url: 'https://httpbin.org/headers',
+            url: 'https://httpbingo.org/headers',
             params: { render_js: false },
             headers: {
                 'X-Custom-Header': 'CustomValue123'
@@ -265,7 +265,7 @@ async function testHtmlApiWithCookies() {
     console.log('=== Testing HTML API - Custom Cookies ===');
     try {
         const response = await client.htmlApi({
-            url: 'https://httpbin.org/cookies',
+            url: 'https://httpbingo.org/cookies',
             params: { render_js: false },
             cookies: {
                 session_id: 'abc123',
@@ -290,7 +290,7 @@ async function testHtmlApiPostWithHeadersAndCookies() {
     console.log('=== Testing HTML API - POST with Headers + Cookies ===');
     try {
         const response = await client.htmlApi({
-            url: 'https://httpbin.org/post',
+            url: 'https://httpbingo.org/post',
             method: 'POST',
             params: { render_js: false },
             headers: { 'X-Test-Header': 'TestValue' },
@@ -333,6 +333,30 @@ async function testGoogleSearch() {
         console.log('✅ Google Search test passed!\n');
     } catch (error) {
         console.log('❌ Google Search test failed:', error.message);
+        throw error;
+    }
+}
+
+async function testFastSearch() {
+    console.log('=== Testing Fast Search API ===');
+    try {
+        const response = await client.fastSearch({
+            search: 'scrapingbee',
+            params: { language: 'en', country_code: 'us', page: 1, tag: 'fast-search-test' }
+        });
+
+        assert(response.status === 200, `Expected status 200, got ${response.status}`);
+
+        const data = parseResponse(response);
+        assert(data.organic, 'Missing organic results in response');
+        assert(Array.isArray(data.organic), 'organic results is not an array');
+        assert(data.organic.length > 0, 'No organic results found');
+
+        console.log('Status:', response.status);
+        console.log('Results found:', data.organic.length);
+        console.log('✅ Fast Search test passed!\n');
+    } catch (error) {
+        console.log('❌ Fast Search test failed:', error.message);
         throw error;
     }
 }
@@ -383,6 +407,33 @@ async function testAmazonProduct() {
         console.log('✅ Amazon Product test passed!\n');
     } catch (error) {
         console.log('❌ Amazon Product test failed:', error.message);
+        throw error;
+    }
+}
+
+async function testAmazonPricing() {
+    console.log('=== Testing Amazon Pricing API ===');
+    try {
+        // NOTE: per docs, do not send `country` matching the domain's country
+        // (e.g. country=us & domain=com returns 400). Use zip_code for localization.
+        const response = await client.amazonPricing({
+            asin: 'B0D2Q9397Y',
+            params: { domain: 'com', zip_code: '10001', light_request: true }
+        });
+
+        assert(response.status === 200, `Expected status 200, got ${response.status}`);
+
+        const data = parseResponse(response);
+        assert(data.asin, 'Missing asin in response');
+        assert(data.pricing, 'Missing pricing in response');
+        assert(Array.isArray(data.pricing), 'pricing is not an array');
+        assert(data.pricing.length > 0, 'No pricing offers found');
+
+        console.log('Status:', response.status);
+        console.log('Offers found:', data.pricing.length);
+        console.log('✅ Amazon Pricing test passed!\n');
+    } catch (error) {
+        console.log('❌ Amazon Pricing test failed:', error.message);
         throw error;
     }
 }
@@ -463,6 +514,28 @@ async function testChatGPT() {
     }
 }
 
+async function testGemini() {
+    console.log('=== Testing Gemini API ===');
+    try {
+        const response = await client.gemini({
+            prompt: 'What is web scraping? Answer in one sentence.',
+            params: { country_code: 'us' }
+        });
+
+        assert(response.status === 200, `Expected status 200, got ${response.status}`);
+
+        const data = parseResponse(response);
+        assert(data.results_text || data.results_markdown, 'Missing response text');
+
+        console.log('Status:', response.status);
+        console.log('Response:', (data.results_text || data.results_markdown).substring(0, 100));
+        console.log('✅ Gemini test passed!\n');
+    } catch (error) {
+        console.log('❌ Gemini test failed:', error.message);
+        throw error;
+    }
+}
+
 // ============================================
 // YouTube API
 // ============================================
@@ -479,11 +552,11 @@ async function testYouTubeSearch() {
 
         const data = parseResponse(response);
         assert(data.results, 'Missing results in response');
-        assert(Array.isArray(data.results), 'results is not an array');
+        assert(typeof data.results === 'string', 'results is not a string');
         assert(data.results.length > 0, 'No results found');
 
         console.log('Status:', response.status);
-        console.log('Results found:', data.results.length);
+        console.log('Results length:', data.results.length);
         console.log('✅ YouTube Search test passed!\n');
     } catch (error) {
         console.log('❌ YouTube Search test failed:', error.message);
@@ -495,7 +568,8 @@ async function testYouTubeMetadata() {
     console.log('=== Testing YouTube Metadata API ===');
     try {
         const response = await client.youtubeMetadata({
-            video_id: 'dQw4w9WgXcQ'
+            video_id: 'dQw4w9WgXcQ',
+            params: { tag: 'metadata-test' }
         });
 
         assert(response.status === 200, `Expected status 200, got ${response.status}`);
@@ -512,45 +586,24 @@ async function testYouTubeMetadata() {
     }
 }
 
-async function testYouTubeTranscript() {
-    console.log('=== Testing YouTube Transcript API ===');
+async function testYouTubeSubtitles() {
+    console.log('=== Testing YouTube Subtitles API ===');
     try {
-        const response = await client.youtubeTranscript({
+        const response = await client.youtubeSubtitles({
             video_id: 'sfyL4BswUeE',
-            params: { language: 'en' }
+            params: { language: 'en', subtitle_origin: 'auto_generated' }
         });
 
         assert(response.status === 200, `Expected status 200, got ${response.status}`);
 
         const data = parseResponse(response);
-        assert(data.text || data.transcript, 'Missing transcript in response');
+        assert(data.subtitles, 'Missing subtitles in response');
 
         console.log('Status:', response.status);
-        console.log('Transcript preview:', (data.text || JSON.stringify(data.transcript)).substring(0, 100));
-        console.log('✅ YouTube Transcript test passed!\n');
+        console.log('Subtitles preview:', JSON.stringify(data.subtitles).substring(0, 100));
+        console.log('✅ YouTube Subtitles test passed!\n');
     } catch (error) {
-        console.log('❌ YouTube Transcript test failed:', error.message);
-        throw error;
-    }
-}
-
-async function testYouTubeTrainability() {
-    console.log('=== Testing YouTube Trainability API ===');
-    try {
-        const response = await client.youtubeTrainability({
-            video_id: 'dQw4w9WgXcQ'
-        });
-
-        assert(response.status === 200, `Expected status 200, got ${response.status}`);
-
-        const data = parseResponse(response);
-        assert(data.permitted !== undefined, 'Missing permitted field in response');
-
-        console.log('Status:', response.status);
-        console.log('Permitted:', data.permitted);
-        console.log('✅ YouTube Trainability test passed!\n');
-    } catch (error) {
-        console.log('❌ YouTube Trainability test failed:', error.message);
+        console.log('❌ YouTube Subtitles test failed:', error.message);
         throw error;
     }
 }
@@ -610,15 +663,17 @@ async function runTests() {
 
         // Other APIs
         testGoogleSearch,
+        testFastSearch,
         testAmazonSearch,
         testAmazonProduct,
+        testAmazonPricing,
         testWalmartSearch,
         testWalmartProduct,
         testChatGPT,
+        testGemini,
         testYouTubeSearch,
         testYouTubeMetadata,
-        testYouTubeTranscript,
-        testYouTubeTrainability,
+        testYouTubeSubtitles,
         testUsage,
     ];
 
