@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.9.0](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.8.2...v1.9.0) (2026-07-24)
+## [1.9.0](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.8.2...v1.9.0) (2026-07-28)
 
 ### Features
 
