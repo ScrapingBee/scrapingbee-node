@@ -91,7 +91,7 @@ async function post(url) {
     console.log(text);
 }
 
-post('https://httpbingo.org/post');
+post('https://httpbin.scrapingbee.com/post');
 ```
 
 ### Screenshot

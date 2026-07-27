@@ -28,13 +28,13 @@ async function testHtmlGet() {
     console.log('=== Testing HTML API - GET ===');
     try {
         const response = await client.get({
-            url: 'https://httpbingo.org/get',
+            url: 'https://httpbin.scrapingbee.com/get',
             params: { render_js: false }
         });
 
         assert(response.status === 200, `Expected status 200, got ${response.status}`);
         assert(response.data, 'Response data is empty');
-        assert(response.data.toString().includes('httpbingo'), 'Response does not contain expected content');
+        assert(response.data.toString().includes('httpbin'), 'Response does not contain expected content');
 
         console.log('Status:', response.status);
         console.log('✅ HTML GET test passed!\n');
@@ -48,7 +48,7 @@ async function testHtmlPost() {
     console.log('=== Testing HTML API - POST ===');
     try {
         const response = await client.post({
-            url: 'https://httpbingo.org/post',
+            url: 'https://httpbin.scrapingbee.com/post',
             params: { render_js: false },
             data: 'test=data'
         });
@@ -73,14 +73,14 @@ async function testHtmlApiGet() {
     console.log('=== Testing HTML API (New) - GET ===');
     try {
         const response = await client.htmlApi({
-            url: 'https://httpbingo.org/get',
+            url: 'https://httpbin.scrapingbee.com/get',
             method: 'GET',
             params: { render_js: false }
         });
 
         assert(response.status === 200, `Expected status 200, got ${response.status}`);
         assert(response.data, 'Response data is empty');
-        assert(response.data.toString().includes('httpbingo'), 'Response does not contain expected content');
+        assert(response.data.toString().includes('httpbin'), 'Response does not contain expected content');
 
         console.log('Status:', response.status);
         console.log('✅ HTML API GET test passed!\n');
@@ -94,7 +94,7 @@ async function testHtmlApiPost() {
     console.log('=== Testing HTML API (New) - POST ===');
     try {
         const response = await client.htmlApi({
-            url: 'https://httpbingo.org/post',
+            url: 'https://httpbin.scrapingbee.com/post',
             method: 'POST',
             params: { render_js: false },
             data: 'test=data'
@@ -213,7 +213,7 @@ async function testHtmlApiJsonResponse() {
     console.log('=== Testing HTML API - JSON Response ===');
     try {
         const response = await client.htmlApi({
-            url: 'https://httpbingo.org/get',
+            url: 'https://httpbin.scrapingbee.com/get',
             params: {
                 render_js: false,
                 json_response: true
@@ -243,7 +243,7 @@ async function testHtmlApiWithHeaders() {
     console.log('=== Testing HTML API - Custom Headers ===');
     try {
         const response = await client.htmlApi({
-            url: 'https://httpbingo.org/headers',
+            url: 'https://httpbin.scrapingbee.com/headers',
             params: { render_js: false },
             headers: {
                 'X-Custom-Header': 'CustomValue123'
@@ -265,7 +265,7 @@ async function testHtmlApiWithCookies() {
     console.log('=== Testing HTML API - Custom Cookies ===');
     try {
         const response = await client.htmlApi({
-            url: 'https://httpbingo.org/cookies',
+            url: 'https://httpbin.scrapingbee.com/cookies',
             params: { render_js: false },
             cookies: {
                 session_id: 'abc123',
@@ -290,7 +290,7 @@ async function testHtmlApiPostWithHeadersAndCookies() {
     console.log('=== Testing HTML API - POST with Headers + Cookies ===');
     try {
         const response = await client.htmlApi({
-            url: 'https://httpbingo.org/post',
+            url: 'https://httpbin.scrapingbee.com/post',
             method: 'POST',
             params: { render_js: false },
             headers: { 'X-Test-Header': 'TestValue' },
