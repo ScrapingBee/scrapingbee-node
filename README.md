@@ -64,6 +64,44 @@ async function get(url) {
 get('https://example.com');
 ```
 
+### Auto-Mode
+
+With `mode: 'auto'`, ScrapingBee automatically picks the cheapest scraping config that
+successfully returns the page — trying cheaper configs first and escalating only as needed.
+You are charged **only for the config that succeeded** (0 credits if none did).
+
+```javascript
+const { ScrapingBeeClient } = require('scrapingbee');
+
+async function autoScrape(url) {
+    const client = new ScrapingBeeClient('YOUR-API-KEY');
+    const response = await client.htmlApi({
+        url: url,
+        // Auto-Mode: ScrapingBee picks the cheapest config that works;
+        // charged only for the winning one.
+        params: {
+            mode: 'auto',
+            max_cost: 25, // optional credit cap; omit for uncapped
+        },
+    });
+
+    // Credits actually charged for the winning config (0 if it failed).
+    // axios lowercases header keys, so read the lowercase key.
+    console.log(response.headers['spb-auto-cost']);
+
+    const decoder = new TextDecoder();
+    console.log(decoder.decode(response.data));
+}
+
+autoScrape('https://example.com');
+```
+
+Notes:
+
+-   Auto-Mode is **GET only**.
+-   `max_cost` is optional (an integer ≥ 1). It caps the credits a request may cost; omit it for uncapped escalation.
+-   Don't combine `mode: 'auto'` with `render_js`, `premium_proxy`, or `stealth_proxy` — the API rejects those combinations.
+
 ### POST Request
 
 ```javascript

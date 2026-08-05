@@ -36,6 +36,8 @@ export type HtmlApiParams = {
     forward_headers_pure?: boolean;
     js_scenario?: object | string;
     json_response?: boolean;
+    max_cost?: number;
+    mode?: 'auto';
     own_proxy?: string;
     premium_proxy?: boolean;
     render_js?: boolean;
@@ -48,8 +50,6 @@ export type HtmlApiParams = {
     screenshot_selector?: string;
     session_id?: number;
     stealth_proxy?: boolean;
-    mode?: string;
-    max_cost?: number;
     timeout?: number;
     transparent_status_code?: boolean;
     wait?: number;
