@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.9.0](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.8.2...v1.9.0) (2026-07-28)
+## [2.0.0](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.8.2...v2.0.0) (2026-08-05)
 
 ### Features
 
@@ -13,6 +13,7 @@
 
 ### Removed
 
+-   Removed deprecated `get()` and `post()` methods (use `htmlApi()` with `method: 'GET'`/`'POST'` instead)
 -   Removed `youtubeTranscript()` method (endpoint no longer supported; use `youtubeSubtitles()` instead)
 -   Removed `youtubeTrainability()` method (no longer supported)
 

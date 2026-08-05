@@ -500,22 +500,6 @@ client.googleSearch({ search: 'test' })
 
 ---
 
-## Legacy Methods (Deprecated)
-
-The `get()` and `post()` methods are deprecated and will be removed in a future version. Please use `htmlApi()` instead.
-
-```javascript
-// Deprecated
-await client.get({ url: '...' });
-await client.post({ url: '...' });
-
-// Use instead
-await client.htmlApi({ url: '...', method: 'GET' });
-await client.htmlApi({ url: '...', method: 'POST' });
-```
-
----
-
 ## Documentation
 
 For more details on all available parameters, visit [ScrapingBee's documentation](https://www.scrapingbee.com/documentation/).

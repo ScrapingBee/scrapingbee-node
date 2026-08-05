@@ -1,5 +1,4 @@
 import axios, { AxiosPromise, AxiosRequestConfig, Method } from 'axios';
-import { deprecate } from 'util';
 import axiosRetry from 'axios-retry';
 
 import { process_params, process_headers } from './utils';
@@ -375,58 +374,6 @@ export class ScrapingBeeClient {
 
         return axios(axiosConfig);
     }
-
-        /**
-     * @deprecated Use htmlApi() instead. This method will be removed in version 2.0.0.
-     */
-    public get = deprecate((config: HtmlApiConfig): AxiosPromise => {
-        let params: Record<string, any> = {
-            ...config.params,
-            url: config.url,
-            cookies: config.cookies
-        };
-
-        let headers = process_headers(config.headers);
-        if (Object.keys(config.headers ?? {}).length > 0) {
-            params.forward_headers = true;
-        }
-
-        return this.request({
-            method: 'GET',
-            endpoint: HTML_API_URL,
-            params: process_params(params),
-            headers: headers,
-            data: config.data,
-            retries: config.retries,
-            timeout: config.timeout,
-        });
-    }, 'ScrapingBeeClient.get() is deprecated. Please use client.htmlApi() instead. This method will be removed in version 2.0.0.');
-
-    /**
-     * @deprecated Use htmlApi() instead. This method will be removed in version 2.0.0.
-     */
-    public post = deprecate((config: HtmlApiConfig): AxiosPromise => {
-        let params: Record<string, any> = {
-            ...config.params,
-            url: config.url,
-            cookies: config.cookies
-        };
-
-        let headers = process_headers(config.headers);
-        if (Object.keys(config.headers ?? {}).length > 0) {
-            params.forward_headers = true;
-        }
-
-        return this.request({
-            method: 'POST',
-            endpoint: HTML_API_URL,
-            params: process_params(params),
-            headers: headers,
-            data: config.data,
-            retries: config.retries,
-            timeout: config.timeout,
-        });
-    }, 'ScrapingBeeClient.post() is deprecated. Please use client.htmlApi() instead. This method will be removed in version 2.0.0.');
 
     public googleSearch(config: GoogleSearchConfig): AxiosPromise {
         const params: Record<string, any> = {

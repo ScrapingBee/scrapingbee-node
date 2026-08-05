@@ -21,52 +21,7 @@ function assert(condition, message) {
 }
 
 // ============================================
-// Legacy HTML API Tests
-// ============================================
-
-async function testHtmlGet() {
-    console.log('=== Testing HTML API - GET ===');
-    try {
-        const response = await client.get({
-            url: 'https://httpbin.scrapingbee.com/get',
-            params: { render_js: false }
-        });
-
-        assert(response.status === 200, `Expected status 200, got ${response.status}`);
-        assert(response.data, 'Response data is empty');
-        assert(response.data.toString().includes('httpbin'), 'Response does not contain expected content');
-
-        console.log('Status:', response.status);
-        console.log('✅ HTML GET test passed!\n');
-    } catch (error) {
-        console.log('❌ HTML GET test failed:', error.message);
-        throw error;
-    }
-}
-
-async function testHtmlPost() {
-    console.log('=== Testing HTML API - POST ===');
-    try {
-        const response = await client.post({
-            url: 'https://httpbin.scrapingbee.com/post',
-            params: { render_js: false },
-            data: 'test=data'
-        });
-
-        assert(response.status === 200, `Expected status 200, got ${response.status}`);
-        assert(response.data, 'Response data is empty');
-        assert(response.data.toString().includes('test'), 'Response does not contain posted data');
-
-        console.log('Status:', response.status);
-        console.log('✅ HTML POST test passed!\n');
-    } catch (error) {
-        console.log('❌ HTML POST test failed:', error.message);
-        throw error;
-    }
-}
-
-// ============================================
-// New HTML API Tests
+// HTML API Tests
 // ============================================
 
 async function testHtmlApiGet() {
@@ -646,11 +601,7 @@ async function runTests() {
     let failed = 0;
 
     const tests = [
-        // Legacy HTML API
-        testHtmlGet,
-        testHtmlPost,
-
-        // New HTML API
+        // HTML API
         testHtmlApiGet,
         testHtmlApiPost,
         testHtmlApiExtractRules,

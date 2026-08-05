@@ -284,14 +284,6 @@ export declare class ScrapingBeeClient {
     readonly api_key: string;
     constructor(api_key: string);
     private request;
-    /**
- * @deprecated Use htmlApi() instead. This method will be removed in version 2.0.0.
- */
-    get: (config: HtmlApiConfig) => AxiosPromise<any>;
-    /**
-     * @deprecated Use htmlApi() instead. This method will be removed in version 2.0.0.
-     */
-    post: (config: HtmlApiConfig) => AxiosPromise<any>;
     googleSearch(config: GoogleSearchConfig): AxiosPromise;
     amazonSearch(config: AmazonSearchConfig): AxiosPromise;
     amazonProduct(config: AmazonProductConfig): AxiosPromise;
