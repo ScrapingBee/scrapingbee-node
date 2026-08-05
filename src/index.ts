@@ -34,6 +34,8 @@ export type HtmlApiParams = {
     forward_headers_pure?: boolean;
     js_scenario?: object | string;
     json_response?: boolean;
+    max_cost?: number;
+    mode?: 'auto';
     own_proxy?: string;
     premium_proxy?: boolean;
     render_js?: boolean;

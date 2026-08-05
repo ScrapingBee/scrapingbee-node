@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.3](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.8.2...v1.8.3) (2026-06-30)
+
+### Features
+
+-   Added Auto-Mode support for the HTML API: pass `mode: 'auto'` (GET only) to let ScrapingBee pick the cheapest scraping config that succeeds, charged only for the winning config. Optional `max_cost` (integer ≥ 1) caps the credits a request may cost. The credits charged are returned in the `Spb-auto-cost` response header.
+-   Added `mode` and `max_cost` to the `HtmlApiParams` type for autocomplete.
+
 ## [1.8.2](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.8.0...v1.8.2) (2026-01-22)
 
 ### Bugfix
