@@ -1,5 +1,4 @@
 import axios, { AxiosPromise, AxiosRequestConfig, Method } from 'axios';
-import { deprecate } from 'util';
 import axiosRetry from 'axios-retry';
 
 import { process_params, process_headers } from './utils';
@@ -13,13 +12,16 @@ const WALMART_PRODUCT_API_URL: string = 'https://app.scrapingbee.com/api/v1/walm
 const CHATGPT_API_URL: string = 'https://app.scrapingbee.com/api/v1/chatgpt';
 const YOUTUBE_SEARCH_API_URL: string = 'https://app.scrapingbee.com/api/v1/youtube/search';
 const YOUTUBE_METADATA_API_URL: string = 'https://app.scrapingbee.com/api/v1/youtube/metadata';
-const YOUTUBE_TRANSCRIPT_API_URL: string = 'https://app.scrapingbee.com/api/v1/youtube/transcript';
-const YOUTUBE_TRAINABILITY_API_URL: string = 'https://app.scrapingbee.com/api/v1/youtube/trainability';
+const YOUTUBE_SUBTITLES_API_URL: string = 'https://app.scrapingbee.com/api/v1/youtube/subtitles';
+const FAST_SEARCH_API_URL: string = 'https://app.scrapingbee.com/api/v1/fast_search';
+const AMAZON_PRICING_API_URL: string = 'https://app.scrapingbee.com/api/v1/amazon/pricing';
+const GEMINI_API_URL: string = 'https://app.scrapingbee.com/api/v1/gemini';
 const USAGE_API_URL: string = 'https://app.scrapingbee.com/api/v1/usage';
 
 
 // HTML API
 export type HtmlApiParams = {
+    tag?: string;
     ai_extract_rules?: object | string;
     ai_query?: string;
     ai_selector?: string;
@@ -73,15 +75,24 @@ export interface HtmlApiConfig {
 // GOOGLE
 
 export type GoogleSearchParams = {
+    tag?: string;
     add_html?: boolean;
     country_code?: string;
+    date_range?: string;
     device?: string;
     extra_params?: string;
     language?: string;
+    latitude?: number;
     light_request?: boolean;
+    longitude?: number;
+    max_price?: number;
+    min_price?: number;
     nfpr?: boolean;
     page?: number;
+    pages?: number;
+    radius?: number;
     search_type?: string;
+    sort_by?: string;
 } & {
     [key: string]: any;
 };
@@ -96,7 +107,9 @@ export interface GoogleSearchConfig {
 // AMAZON
 
 export type AmazonSearchParams = {
+    tag?: string;
     add_html?: boolean;
+    autoselect_variant?: boolean;
     category_id?: string;
     country?: string;
     currency?: string;
@@ -122,6 +135,7 @@ export interface AmazonSearchConfig {
 }
 
 export type AmazonProductParams = {
+    tag?: string;
     add_html?: boolean;
     autoselect_variant?: boolean;
     country?: string;
@@ -146,6 +160,7 @@ export interface AmazonProductConfig {
 // WALMART
 
 export type WalmartSearchParams = {
+    tag?: string;
     add_html?: boolean;
     delivery_zip?: string;
     device?: string;
@@ -157,6 +172,7 @@ export type WalmartSearchParams = {
     min_price?: number;
     screenshot?: boolean;
     sort_by?: string;
+    start_page?: number;
     store_id?: string;
 } & {
     [key: string]: any;
@@ -170,6 +186,7 @@ export interface WalmartSearchConfig {
 }
 
 export type WalmartProductParams = {
+    tag?: string;
     add_html?: boolean;
     delivery_zip?: string;
     device?: string;
@@ -191,6 +208,7 @@ export interface WalmartProductConfig {
 // CHATGPT
 
 export type ChatGPTParams = {
+    tag?: string;
     add_html?: boolean;
     country_code?: string;
     search?: boolean;
@@ -208,6 +226,7 @@ export interface ChatGPTConfig {
 // YOUTUBE
 
 export type YouTubeSearchParams = {
+    tag?: string;
     '360'?: boolean;
     '3d'?: boolean;
     '4k'?: boolean;
@@ -234,28 +253,88 @@ export interface YouTubeSearchConfig {
     timeout?: number;
 }
 
-export interface YouTubeMetadataConfig {
-    video_id: string;
-    retries?: number;
-    timeout?: number;
-}
-
-export type YouTubeTranscriptParams = {
-    language?: string;
-    transcript_origin?: string;
+export type YouTubeMetadataParams = {
+    tag?: string;
 } & {
     [key: string]: any;
 };
 
-export interface YouTubeTranscriptConfig {
+export interface YouTubeMetadataConfig {
     video_id: string;
-    params?: YouTubeTranscriptParams;
+    params?: YouTubeMetadataParams;
     retries?: number;
     timeout?: number;
 }
 
-export interface YouTubeTrainabilityConfig {
+export type YouTubeSubtitlesParams = {
+    tag?: string;
+    language?: string;
+    subtitle_origin?: string;
+} & {
+    [key: string]: any;
+};
+
+export interface YouTubeSubtitlesConfig {
     video_id: string;
+    params?: YouTubeSubtitlesParams;
+    retries?: number;
+    timeout?: number;
+}
+
+// FAST SEARCH
+
+export type FastSearchParams = {
+    country_code?: string;
+    language?: string;
+    page?: number;
+    tag?: string;
+} & {
+    [key: string]: any;
+};
+
+export interface FastSearchConfig {
+    search: string;
+    params?: FastSearchParams;
+    retries?: number;
+    timeout?: number;
+}
+
+// AMAZON PRICING
+
+export type AmazonPricingParams = {
+    tag?: string;
+    add_html?: boolean;
+    country?: string;
+    currency?: string;
+    device?: string;
+    domain?: string;
+    language?: string;
+    light_request?: boolean;
+    zip_code?: string;
+} & {
+    [key: string]: any;
+};
+
+export interface AmazonPricingConfig {
+    asin: string;
+    params?: AmazonPricingParams;
+    retries?: number;
+    timeout?: number;
+}
+
+// GEMINI
+
+export type GeminiParams = {
+    tag?: string;
+    add_html?: boolean;
+    country_code?: string;
+} & {
+    [key: string]: any;
+};
+
+export interface GeminiConfig {
+    prompt: string;
+    params?: GeminiParams;
     retries?: number;
     timeout?: number;
 }
@@ -295,58 +374,6 @@ export class ScrapingBeeClient {
 
         return axios(axiosConfig);
     }
-
-        /**
-     * @deprecated Use htmlApi() instead. This method will be removed in version 2.0.0.
-     */
-    public get = deprecate((config: HtmlApiConfig): AxiosPromise => {
-        let params: Record<string, any> = {
-            ...config.params,
-            url: config.url,
-            cookies: config.cookies
-        };
-
-        let headers = process_headers(config.headers);
-        if (Object.keys(config.headers ?? {}).length > 0) {
-            params.forward_headers = true;
-        }
-
-        return this.request({
-            method: 'GET',
-            endpoint: HTML_API_URL,
-            params: process_params(params),
-            headers: headers,
-            data: config.data,
-            retries: config.retries,
-            timeout: config.timeout,
-        });
-    }, 'ScrapingBeeClient.get() is deprecated. Please use client.htmlApi() instead. This method will be removed in version 2.0.0.');
-
-    /**
-     * @deprecated Use htmlApi() instead. This method will be removed in version 2.0.0.
-     */
-    public post = deprecate((config: HtmlApiConfig): AxiosPromise => {
-        let params: Record<string, any> = {
-            ...config.params,
-            url: config.url,
-            cookies: config.cookies
-        };
-
-        let headers = process_headers(config.headers);
-        if (Object.keys(config.headers ?? {}).length > 0) {
-            params.forward_headers = true;
-        }
-
-        return this.request({
-            method: 'POST',
-            endpoint: HTML_API_URL,
-            params: process_params(params),
-            headers: headers,
-            data: config.data,
-            retries: config.retries,
-            timeout: config.timeout,
-        });
-    }, 'ScrapingBeeClient.post() is deprecated. Please use client.htmlApi() instead. This method will be removed in version 2.0.0.');
 
     public googleSearch(config: GoogleSearchConfig): AxiosPromise {
         const params: Record<string, any> = {
@@ -456,6 +483,7 @@ export class ScrapingBeeClient {
     public youtubeMetadata(config: YouTubeMetadataConfig): AxiosPromise {
         const params: Record<string, any> = {
             video_id: config.video_id,
+            ...config.params,
         };
 
         return this.request({
@@ -467,7 +495,7 @@ export class ScrapingBeeClient {
         });
     }
 
-    public youtubeTranscript(config: YouTubeTranscriptConfig): AxiosPromise {
+    public youtubeSubtitles(config: YouTubeSubtitlesConfig): AxiosPromise {
         const params: Record<string, any> = {
             video_id: config.video_id,
             ...config.params,
@@ -475,21 +503,52 @@ export class ScrapingBeeClient {
 
         return this.request({
             method: 'GET',
-            endpoint: YOUTUBE_TRANSCRIPT_API_URL,
+            endpoint: YOUTUBE_SUBTITLES_API_URL,
             params,
             retries: config.retries,
             timeout: config.timeout,
         });
     }
 
-    public youtubeTrainability(config: YouTubeTrainabilityConfig): AxiosPromise {
+    public fastSearch(config: FastSearchConfig): AxiosPromise {
         const params: Record<string, any> = {
-            video_id: config.video_id,
+            search: config.search,
+            ...config.params,
         };
 
         return this.request({
             method: 'GET',
-            endpoint: YOUTUBE_TRAINABILITY_API_URL,
+            endpoint: FAST_SEARCH_API_URL,
+            params,
+            retries: config.retries,
+            timeout: config.timeout,
+        });
+    }
+
+    public amazonPricing(config: AmazonPricingConfig): AxiosPromise {
+        const params: Record<string, any> = {
+            asin: config.asin,
+            ...config.params,
+        };
+
+        return this.request({
+            method: 'GET',
+            endpoint: AMAZON_PRICING_API_URL,
+            params,
+            retries: config.retries,
+            timeout: config.timeout,
+        });
+    }
+
+    public gemini(config: GeminiConfig): AxiosPromise {
+        const params: Record<string, any> = {
+            prompt: config.prompt,
+            ...config.params,
+        };
+
+        return this.request({
+            method: 'GET',
+            endpoint: GEMINI_API_URL,
             params,
             retries: config.retries,
             timeout: config.timeout,

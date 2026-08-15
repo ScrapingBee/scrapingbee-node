@@ -20,10 +20,12 @@ Signup to ScrapingBee to [get your API key](https://app.scrapingbee.com/account/
 
 - [HTML API](#html-api)
 - [Google Search API](#google-search-api)
+- [Fast Search API](#fast-search-api)
 - [Amazon API](#amazon-api)
 - [Walmart API](#walmart-api)
 - [YouTube API](#youtube-api)
 - [ChatGPT API](#chatgpt-api)
+- [Gemini API](#gemini-api)
 - [Usage API](#usage-api)
 
 ---
@@ -110,7 +112,7 @@ async function post(url) {
     const response = await client.htmlApi({
         url: url,
         method: 'POST',
-        'username=user&password=pass',
+        data: 'username=user&password=pass',
         params: {
             render_js: false,
         },
@@ -127,7 +129,7 @@ async function post(url) {
     console.log(text);
 }
 
-post('https://httpbin.org/post');
+post('https://httpbin.scrapingbee.com/post');
 ```
 
 ### Screenshot
@@ -182,6 +184,33 @@ async function googleSearch(query) {
 }
 
 googleSearch('web scraping tools');
+```
+
+---
+
+## Fast Search API
+
+Retrieve a lightweight Google result set optimized for sub-second responses.
+
+```javascript
+const { ScrapingBeeClient } = require('scrapingbee');
+
+async function fastSearch(query) {
+    const client = new ScrapingBeeClient('YOUR-API-KEY');
+    const response = await client.fastSearch({
+        search: query,
+        params: {
+            page: 1,
+            country_code: 'us',
+            language: 'en',
+            tag: 'my-request',
+        }
+    });
+
+    console.log(response.data);
+}
+
+fastSearch('web scraping tools');
 ```
 
 ---
@@ -243,6 +272,32 @@ async function amazonProduct(asin) {
 }
 
 amazonProduct('B0D2Q9397Y');
+```
+
+### Amazon Pricing
+
+```javascript
+const { ScrapingBeeClient } = require('scrapingbee');
+
+async function amazonPricing(asin) {
+    const client = new ScrapingBeeClient('YOUR-API-KEY');
+    const response = await client.amazonPricing({
+        asin: asin,
+        params: {
+            domain: 'com',
+            language: 'en',
+            zip_code: '10001',
+            currency: 'USD',
+            device: 'desktop',
+            light_request: true,
+            add_html: false,
+        }
+    });
+
+    console.log(response.data);
+}
+
+amazonPricing('B0D2Q9397Y');
 ```
 
 ---
@@ -307,7 +362,7 @@ walmartProduct('123456789');
 
 ## YouTube API
 
-Scrape YouTube search results, video metadata, transcripts, and trainability data.
+Scrape YouTube search results, video metadata, and subtitles.
 
 ### YouTube Search
 
@@ -353,42 +408,25 @@ async function youtubeMetadata(videoId) {
 youtubeMetadata('dQw4w9WgXcQ');
 ```
 
-### YouTube Transcript
+### YouTube Subtitles
 
 ```javascript
 const { ScrapingBeeClient } = require('scrapingbee');
 
-async function youtubeTranscript(videoId) {
+async function youtubeSubtitles(videoId) {
     const client = new ScrapingBeeClient('YOUR-API-KEY');
-    const response = await client.youtubeTranscript({
+    const response = await client.youtubeSubtitles({
         video_id: videoId,
         params: {
             language: 'en',
-            transcript_origin: 'auto_generated',
+            subtitle_origin: 'auto_generated',
         }
     });
 
     console.log(response.data);
 }
 
-youtubeTranscript('dQw4w9WgXcQ');
-```
-
-### YouTube Trainability
-
-```javascript
-const { ScrapingBeeClient } = require('scrapingbee');
-
-async function youtubeTrainability(videoId) {
-    const client = new ScrapingBeeClient('YOUR-API-KEY');
-    const response = await client.youtubeTrainability({
-        video_id: videoId,
-    });
-
-    console.log(response.data);
-}
-
-youtubeTrainability('dQw4w9WgXcQ');
+youtubeSubtitles('dQw4w9WgXcQ');
 ```
 
 ---
@@ -415,6 +453,31 @@ async function askChatGPT(prompt) {
 }
 
 askChatGPT('What are the latest web scraping trends?');
+```
+
+---
+
+## Gemini API
+
+Ask Gemini through ScrapingBee and receive citation objects when available.
+
+```javascript
+const { ScrapingBeeClient } = require('scrapingbee');
+
+async function askGemini(prompt) {
+    const client = new ScrapingBeeClient('YOUR-API-KEY');
+    const response = await client.gemini({
+        prompt: prompt,
+        params: {
+            country_code: 'us',
+            add_html: false,
+        }
+    });
+
+    console.log(response.data);
+}
+
+askGemini('What are the latest web scraping trends?');
 ```
 
 ---
@@ -471,22 +534,6 @@ const response = await client.googleSearch({ search: 'test' });
 client.googleSearch({ search: 'test' })
     .then(response => console.log(response.data))
     .catch(error => console.error(error));
-```
-
----
-
-## Legacy Methods (Deprecated)
-
-The `get()` and `post()` methods are deprecated and will be removed in a future version. Please use `htmlApi()` instead.
-
-```javascript
-// Deprecated
-await client.get({ url: '...' });
-await client.post({ url: '...' });
-
-// Use instead
-await client.htmlApi({ url: '...', method: 'GET' });
-await client.htmlApi({ url: '...', method: 'POST' });
 ```
 
 ---
