@@ -62,6 +62,7 @@ export declare type GoogleSearchParams = {
     longitude?: number;
     max_price?: number;
     min_price?: number;
+    nb_results?: number;
     nfpr?: boolean;
     page?: number;
     pages?: number;
