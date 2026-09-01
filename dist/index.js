@@ -27,12 +27,11 @@ class ScrapingBeeClient {
     }
     request(config) {
         var _a;
-        config.params['api_key'] = this.api_key;
         const axiosConfig = {
             method: config.method,
             url: config.endpoint,
             params: config.params,
-            headers: config.headers,
+            headers: Object.assign(Object.assign({}, config.headers), { Authorization: `Bearer ${this.api_key}` }),
             data: config.data,
             responseType: 'arraybuffer',
             timeout: (_a = config.timeout) !== null && _a !== void 0 ? _a : 0,

@@ -20,7 +20,8 @@ describe('test_ScrapingBeeClient.htmlApi', function () {
     it('should make a GET request by default', async function () {
         var res = await client.htmlApi({ url: target_url });
         assert.deepStrictEqual(res.status, 200);
-        assert.deepStrictEqual(res.config.params['api_key'], api_key);
+        // @ts-ignore
+        assert.deepStrictEqual(res.config.headers['Authorization'], `Bearer ${api_key}`);
         assert.deepStrictEqual(res.config.params['url'], target_url);
         // @ts-ignore
         assert.match(res.config.headers['User-Agent'], /^ScrapingBee-Node\//);
@@ -38,7 +39,8 @@ describe('test_ScrapingBeeClient.htmlApi', function () {
             data: 'test=data'
         });
         assert.deepStrictEqual(res.status, 201);
-        assert.deepStrictEqual(res.config.params['api_key'], api_key);
+        // @ts-ignore
+        assert.deepStrictEqual(res.config.headers['Authorization'], `Bearer ${api_key}`);
         // @ts-ignore
         assert.match(res.config.headers['User-Agent'], /^ScrapingBee-Node\//);
     });
@@ -178,7 +180,8 @@ describe('test_ScrapingBeeClient.googleSearch', function () {
             params: { language: 'en', country_code: 'us' }
         });
         assert.deepStrictEqual(res.status, 200);
-        assert.deepStrictEqual(res.config.params['api_key'], api_key);
+        // @ts-ignore
+        assert.deepStrictEqual(res.config.headers['Authorization'], `Bearer ${api_key}`);
         assert.deepStrictEqual(res.config.params['search'], 'test query');
         assert.deepStrictEqual(res.config.params['language'], 'en');
         assert.deepStrictEqual(res.config.params['country_code'], 'us');
@@ -246,7 +249,8 @@ describe('test_ScrapingBeeClient.amazonSearch', function () {
             params: { domain: 'com', language: 'en' }
         });
         assert.deepStrictEqual(res.status, 200);
-        assert.deepStrictEqual(res.config.params['api_key'], api_key);
+        // @ts-ignore
+        assert.deepStrictEqual(res.config.headers['Authorization'], `Bearer ${api_key}`);
         assert.deepStrictEqual(res.config.params['query'], 'laptop');
         assert.deepStrictEqual(res.config.params['domain'], 'com');
         assert.deepStrictEqual(res.config.params['language'], 'en');
@@ -297,7 +301,8 @@ describe('test_ScrapingBeeClient.amazonProduct', function () {
             params: { domain: 'com' }
         });
         assert.deepStrictEqual(res.status, 200);
-        assert.deepStrictEqual(res.config.params['api_key'], api_key);
+        // @ts-ignore
+        assert.deepStrictEqual(res.config.headers['Authorization'], `Bearer ${api_key}`);
         assert.deepStrictEqual(res.config.params['query'], 'B0D2Q9397Y');
         assert.deepStrictEqual(res.config.params['domain'], 'com');
     });
@@ -344,7 +349,8 @@ describe('test_ScrapingBeeClient.walmartSearch', function () {
             params: { sort_by: 'best_match', device: 'desktop' }
         });
         assert.deepStrictEqual(res.status, 200);
-        assert.deepStrictEqual(res.config.params['api_key'], api_key);
+        // @ts-ignore
+        assert.deepStrictEqual(res.config.headers['Authorization'], `Bearer ${api_key}`);
         assert.deepStrictEqual(res.config.params['query'], 'laptop');
         assert.deepStrictEqual(res.config.params['sort_by'], 'best_match');
     });
@@ -394,7 +400,8 @@ describe('test_ScrapingBeeClient.walmartProduct', function () {
             params: { device: 'desktop' }
         });
         assert.deepStrictEqual(res.status, 200);
-        assert.deepStrictEqual(res.config.params['api_key'], api_key);
+        // @ts-ignore
+        assert.deepStrictEqual(res.config.headers['Authorization'], `Bearer ${api_key}`);
         assert.deepStrictEqual(res.config.params['product_id'], '123456789');
         assert.deepStrictEqual(res.config.params['device'], 'desktop');
     });
@@ -440,7 +447,8 @@ describe('test_ScrapingBeeClient.chatGPT', function () {
             params: { search: true }
         });
         assert.deepStrictEqual(res.status, 200);
-        assert.deepStrictEqual(res.config.params['api_key'], api_key);
+        // @ts-ignore
+        assert.deepStrictEqual(res.config.headers['Authorization'], `Bearer ${api_key}`);
         assert.deepStrictEqual(res.config.params['prompt'], 'What is web scraping?');
         assert.deepStrictEqual(res.config.params['search'], true);
     });
@@ -482,7 +490,8 @@ describe('test_ScrapingBeeClient.youtubeSearch', function () {
             params: { sort_by: 'relevance', type: 'video' }
         });
         assert.deepStrictEqual(res.status, 200);
-        assert.deepStrictEqual(res.config.params['api_key'], api_key);
+        // @ts-ignore
+        assert.deepStrictEqual(res.config.headers['Authorization'], `Bearer ${api_key}`);
         assert.deepStrictEqual(res.config.params['search'], 'web scraping tutorial');
         assert.deepStrictEqual(res.config.params['sort_by'], 'relevance');
     });
@@ -530,7 +539,8 @@ describe('test_ScrapingBeeClient.youtubeMetadata', function () {
             video_id: 'dQw4w9WgXcQ'
         });
         assert.deepStrictEqual(res.status, 200);
-        assert.deepStrictEqual(res.config.params['api_key'], api_key);
+        // @ts-ignore
+        assert.deepStrictEqual(res.config.headers['Authorization'], `Bearer ${api_key}`);
         assert.deepStrictEqual(res.config.params['video_id'], 'dQw4w9WgXcQ');
     });
 
@@ -559,7 +569,8 @@ describe('test_ScrapingBeeClient.youtubeSubtitles', function () {
             params: { language: 'en' }
         });
         assert.deepStrictEqual(res.status, 200);
-        assert.deepStrictEqual(res.config.params['api_key'], api_key);
+        // @ts-ignore
+        assert.deepStrictEqual(res.config.headers['Authorization'], `Bearer ${api_key}`);
         assert.deepStrictEqual(res.config.params['video_id'], 'dQw4w9WgXcQ');
         assert.deepStrictEqual(res.config.params['language'], 'en');
     });
@@ -599,7 +610,8 @@ describe('test_ScrapingBeeClient.fastSearch', function () {
             params: { language: 'en', country_code: 'us' }
         });
         assert.deepStrictEqual(res.status, 200);
-        assert.deepStrictEqual(res.config.params['api_key'], api_key);
+        // @ts-ignore
+        assert.deepStrictEqual(res.config.headers['Authorization'], `Bearer ${api_key}`);
         assert.deepStrictEqual(res.config.params['search'], 'test query');
         assert.deepStrictEqual(res.config.params['language'], 'en');
         assert.deepStrictEqual(res.config.params['country_code'], 'us');
@@ -642,7 +654,8 @@ describe('test_ScrapingBeeClient.amazonPricing', function () {
             params: { domain: 'com' }
         });
         assert.deepStrictEqual(res.status, 200);
-        assert.deepStrictEqual(res.config.params['api_key'], api_key);
+        // @ts-ignore
+        assert.deepStrictEqual(res.config.headers['Authorization'], `Bearer ${api_key}`);
         assert.deepStrictEqual(res.config.params['asin'], 'B0D2Q9397Y');
         assert.deepStrictEqual(res.config.params['domain'], 'com');
     });
@@ -692,7 +705,8 @@ describe('test_ScrapingBeeClient.gemini', function () {
             params: { country_code: 'us' }
         });
         assert.deepStrictEqual(res.status, 200);
-        assert.deepStrictEqual(res.config.params['api_key'], api_key);
+        // @ts-ignore
+        assert.deepStrictEqual(res.config.headers['Authorization'], `Bearer ${api_key}`);
         assert.deepStrictEqual(res.config.params['prompt'], 'What is web scraping?');
         assert.deepStrictEqual(res.config.params['country_code'], 'us');
     });
@@ -729,7 +743,8 @@ describe('test_ScrapingBeeClient.usage', function () {
     it('should make a request with correct params', async function () {
         var res = await client.usage();
         assert.deepStrictEqual(res.status, 200);
-        assert.deepStrictEqual(res.config.params['api_key'], api_key);
+        // @ts-ignore
+        assert.deepStrictEqual(res.config.headers['Authorization'], `Bearer ${api_key}`);
     });
 
     it('should work with empty config', async function () {

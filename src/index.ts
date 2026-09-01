@@ -87,6 +87,7 @@ export type GoogleSearchParams = {
     longitude?: number;
     max_price?: number;
     min_price?: number;
+    nb_results?: number;
     nfpr?: boolean;
     page?: number;
     pages?: number;
@@ -355,13 +356,14 @@ export class ScrapingBeeClient {
     }
 
     private request(config: Record<string, any>): AxiosPromise {
-        config.params['api_key'] = this.api_key;
-
         const axiosConfig: AxiosRequestConfig = {
             method: config.method as Method,
             url: config.endpoint,
             params: config.params,
-            headers: config.headers,
+            headers: {
+                ...config.headers,
+                Authorization: `Bearer ${this.api_key}`,
+            },
             data: config.data,
             responseType: 'arraybuffer',
             timeout: config.timeout ?? 0,

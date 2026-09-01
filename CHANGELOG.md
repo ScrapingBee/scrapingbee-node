@@ -1,9 +1,11 @@
 # Changelog
 
-## [2.0.0](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.8.2...v2.0.0) (2026-08-05)
+## [2.0.0](https://github.com/ScrapingBee/scrapingbee-node/compare/v1.8.2...v2.0.0) (2026-09-01)
 
 ### Features
 
+-   The API key is now sent via the `Authorization: Bearer` header instead of the `api_key` query parameter, keeping keys out of URLs and server logs (SCR-584). No change to how you construct the client.
+-   Added `nb_results` param to Google Search params type
 -   Added `fastSearch()` method for Fast Search API
 -   Added `amazonPricing()` method for Amazon Pricing API
 -   Added `gemini()` method for Gemini API
